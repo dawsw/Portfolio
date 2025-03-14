@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio | Dawson Weilage</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-DTAGcG5Q.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-Bg-6CNGm.css">
+</head>
+<body>
+  <div class="progress-bar-container">
+      <label id="progress-bar-label" for="progress-bar" >Loading</label>
+      <progress id="progress-bar" value="0" max="100"></progress>
+  </div>
+
+  <div class="popup1-wrapper" id="popup1-wrapper">
+    <div class="popup1-container">
+      <h1>Welcome!</h1>
+      <p>Feel free to look around or learn more about me by clicking on the Game Boy:</p>
+      <img src="/assets/gameboyIcon-DYnoV5JL.png" alt="">
+      <button id="popup1-button" class="popup-button">continue</button>
+    </div>
+  </div>
+
+  <div class="popup2-wrapper" id="popup2-wrapper">
+    <div class="popup2-container">
+      <h1>Controls</h1>
+      <div class="controls-headers">
+        <div class="control-button-container">
+          <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-tablet-smartphone'%3e%3crect%20width='10'%20height='14'%20x='3'%20y='8'%20rx='2'/%3e%3cpath%20d='M5%204a2%202%200%200%201%202-2h12a2%202%200%200%201%202%202v16a2%202%200%200%201-2%202h-2.4'/%3e%3cpath%20d='M8%2018h.01'/%3e%3c/svg%3e" class="controls-image">
+          <button class="mobile-button active" id="mobile-button">Mobile</button>
+        </div> 
+        <h1 style="font-weight: 200;">/</h1>
+        <div class="control-button-container">
+          <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-keyboard'%3e%3cpath%20d='M10%208h.01'/%3e%3cpath%20d='M12%2012h.01'/%3e%3cpath%20d='M14%208h.01'/%3e%3cpath%20d='M16%2012h.01'/%3e%3cpath%20d='M18%208h.01'/%3e%3cpath%20d='M6%208h.01'/%3e%3cpath%20d='M7%2016h10'/%3e%3cpath%20d='M8%2012h.01'/%3e%3crect%20width='20'%20height='16'%20x='2'%20y='4'%20rx='2'/%3e%3c/svg%3e" class="controls-image">
+          <button class="desktop-button" id="desktop-button">Desktop</button>
+        </div> 
+      </div>
+      <div class="mobile-controls-container" id="mobile-controls">
+        <div>
+          <div class="controls">
+            <div class="control-names">
+              <p>Move:</p>
+              <p>Interact:</p>
+              <p>Back:</p>
+              <p>Start:</p>
+              <p>Select:</p>
+              <p>Zoom In/Out:</p>
+            </div>
+            <div class="control-keys">
+              <p>D-Pad</p>
+              <p>A</p>
+              <p>B</p>
+              <p>Start</p>
+              <p>Select</p>
+              <p>Pinch</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="desktop-controls-container" id="desktop-controls" hidden>
+        <div class="controls">
+          <div class="control-names">
+            <p>Move:</p>
+            <p>Interact:</p>
+            <p>Back:</p>
+            <p>Start:</p>
+            <p>Select:</p>
+            <p>Zoom In/Out:</p>
+          </div>
+          <div class="control-keys">
+            <p>WASD</p>
+            <p>O</p>
+            <p>P</p>
+            <p>Enter</p>
+            <p>Shift</p>
+            <p>Scroll</p>
+          </div>
+        </div>
+      </div>
+      <button id="popup2-button" class="popup-button">Got it!</button>
+    </div>
+  </div>
+  
+  <button class="backArrow-button" id="backArrowButton"><img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23ffffff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-arrow-left'%3e%3cpath%20d='m12%2019-7-7%207-7'/%3e%3cpath%20d='M19%2012H5'/%3e%3c/svg%3e"></button>
+  <button class="showControls-button" id="showControlsButton"><img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23ffffff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-gamepad'%3e%3cline%20x1='6'%20x2='10'%20y1='12'%20y2='12'/%3e%3cline%20x1='8'%20x2='8'%20y1='10'%20y2='14'/%3e%3cline%20x1='15'%20x2='15.01'%20y1='13'%20y2='13'/%3e%3cline%20x1='18'%20x2='18.01'%20y1='11'%20y2='11'/%3e%3crect%20width='20'%20height='12'%20x='2'%20y='6'%20rx='2'/%3e%3c/svg%3e"></button>
+  
+  <iframe src="/game/index.html" id="gameboyScreen" hidden></iframe>
+</body>
+</html>
