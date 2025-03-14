@@ -237,11 +237,15 @@ iframe {
 .backArrow-button, .showControls-button  {
   display: none;
   position: absolute;
-  scale: 1.2;
   cursor: pointer;
   border: none;
   background-color: transparent;
   filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
+  filter: invert(.1);
+}
+
+.backArrow-button:hover, .showControls-button:hover {
+  filter: invert(.3);
 }
 
 /* phone */
@@ -249,11 +253,13 @@ iframe {
   .showControls-button {
     top: 5%;
     right: 5%;
+    scale: 1;
   }
 
   .backArrow-button {
     top: 5%;
     left: 5%;
+    scale: 1;
   }
 }
 
@@ -261,11 +267,13 @@ iframe {
   .showControls-button {
     top: 5%;
     right: 5%;
+    scale: 1;
   }
 
   .backArrow-button {
     top: 5%;
     left: 5%;
+    scale: 1;
   }
 }
 
@@ -273,16 +281,14 @@ iframe {
   .showControls-button {
     top: 3%;
     right: 3%;
+    scale: 1.2;
   }
 
   .backArrow-button {
     top: 3%;
     left: 3%;
+    scale: 1.2;
   }
-}
-
-.backArrow-button:hover, .showControls-button:hover {
-  filter: invert(.2);
 }
 
 
