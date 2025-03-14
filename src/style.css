@@ -234,26 +234,51 @@ iframe {
   font-size: .9rem;
 }
 
-.backArrow-button {
+.backArrow-button, .showControls-button  {
   display: none;
   position: absolute;
-  top: 3%;
-  left: 3%;
   scale: 1.2;
   cursor: pointer;
   border: none;
   background-color: transparent;
+  filter: drop-shadow(0 0 0.75rem rgb(0, 0, 0));
 }
 
-.showControls-button {
-  display: none;
-  position: absolute;
-  top: 3%;
-  right: 3%;
-  scale: 1.2;
-  cursor: pointer;
-  border: none;
-  background-color: transparent;
+/* phone */
+@media only screen and (max-width: 600px) {
+  .showControls-button {
+    top: 5%;
+    right: 5%;
+  }
+
+  .backArrow-button {
+    top: 5%;
+    left: 5%;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .showControls-button {
+    top: 5%;
+    right: 5%;
+  }
+
+  .backArrow-button {
+    top: 5%;
+    left: 5%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .showControls-button {
+    top: 3%;
+    right: 3%;
+  }
+
+  .backArrow-button {
+    top: 3%;
+    left: 3%;
+  }
 }
 
 .backArrow-button:hover, .showControls-button:hover {
