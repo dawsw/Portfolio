@@ -303,7 +303,7 @@ function displayUI() {
   let controlsButton = document.getElementById('showControlsButton');
   
   backArrow.addEventListener('click', function() {
-    zoomOutOfGB(camera.position.x, camera.position.y, camera.position.z);
+    zoomOutOfGB();
 
     backArrow.style.display = 'none';
     controlsButton.style.display = 'none';
@@ -317,8 +317,8 @@ function displayUI() {
   controlsButton.style.display = 'block';
 };
 
-let shownPopUp2 = false;
 
+let shownPopUp2 = false;
 //function to animate camera along the path to the GB
 function zoomIntoGB(cameraX, cameraY, cameraZ) {
   let pathToGB;
@@ -374,17 +374,17 @@ function zoomIntoGB(cameraX, cameraY, cameraZ) {
 };
 
 
-function zoomOutOfGB(cameraX, cameraY, cameraZ) {
+function zoomOutOfGB() {
   let pathToSpawn;
+  let controlTarget = -7.5;
 
   //allow full vertical orbitControls
   orbitControls.minPolarAngle = 0;
   orbitControls.maxPolarAngle = Math.PI;
   orbitControls.minDistance=0;
   orbitControls.maxDistance=Infinity;
-  orbitControls.enableZoom = true;
-
-
+  orbitControls.enableZoom = false;
+  
   //camera curve path
   pathToSpawn = new THREE.CatmullRomCurve3([
     new THREE.Vector3(0, -4.45, -5.15),
@@ -393,15 +393,22 @@ function zoomOutOfGB(cameraX, cameraY, cameraZ) {
 
   gsap.to((camera.position), {
     motionPath: {
-      path: pathToSpawn.getPoints(500),
+      path: pathToSpawn.getPoints(200),
       autoRotate: false,
       curviness: 2,
     },
     duration: 2,
-    ease: "power2.out",
+    ease: "power2",
     onUpdate: () => {
       orbitControls.enableRotate = false;
-      orbitControls.target.set(gameboyModel.position.x, gameboyModel.position.y, gameboyModel.position.z - 1)
+
+      if (mobileUser) {
+        controlTarget = controlTarget + 0.035
+      } else {
+        controlTarget = controlTarget + 0.022
+      };
+
+      orbitControls.target.set(0, controlTarget, -5.4);
       orbitControls.update();
     },
     onComplete: () => {
