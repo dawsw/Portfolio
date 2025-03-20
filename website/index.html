@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio | Dawson Weilage </title>
+    <link rel="icon" type="image/x-icon" href="./static/light-theme-logo.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="flex dark-theme-background">
+        <div class="nav-left flex flex-centered">
+            <button class="nav-logo dark-theme-text" onclick="window.scrollTo({top: 0, behavior: 'smooth'});"><img src="static/dark-theme-logo.svg" class="" id="logo"></button>
+        </div>
+        <ul class="nav-right flex flex-centered">
+            <li><button class="nav-link dark-theme-text" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">HOME</button></li>
+            <li><button class="nav-link dark-theme-text" onclick="window.scrollTo({top: 980, behavior: 'smooth'});">ABOUT ME</button></li>
+            <li><button class="nav-link dark-theme-text" onclick="window.scrollTo({top: 1960, behavior: 'smooth'});">PROJECTS</button></li>
+            <li><button class="nav-link dark-theme-text" onclick="window.scrollTo({top: 2840, behavior: 'smooth'});">CONTACT</button></li>
+        </ul>
+        <input type="image" src="./static/sun.svg" style="width: 40px; border: none;" id="themeButton"></input>
+    </nav>
+        <div class="home-container section dark-theme-background">
+            <div class="home-header flex column flex-centered text-centered">
+                <div class="flex" style="gap: 30px">
+                    <h1 class="hi intro dark-theme-text">HI,</h1>
+                    <h1 class="im intro dark-theme-text">I'M</h1>
+                    <h1 class="dawson intro dark-theme-text" id="dawson">DAWSON</h1>
+                </div>
+                <h3 class=" title dark-theme-text">SOFTWARE ENGINEER / WEB DEVELOPER</h3>
+                <img src="./static/dark-theme-arrow.svg" class="down-arrow" id="downArrow">
+            </div>
+        </div>
+    <main class="dark-theme-background flex column flex-centered">
+        <div class="aboutme-container section flex flex-centered dark-theme-background">
+            <h1 class="section-header dark-theme-header" id="aboutMeHeader">ABOUT ME</h1>
+            <div class="aboutme-right flex column flex-centered dark-theme-background">
+                <div class='aboutme-right icons-container flex column flex-centered dark-theme-text'>
+                    <h1 class="icons-header">TECHNOLOGY USED</h1>
+                    <div class="icons flex flex-centered">
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/python.png">
+                            <h5>Python</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/html.png">
+                            <h5>HTML</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/css.png">
+                            <h5>CSS</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/javascript.png">
+                            <h5>JavaScript</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/java.png">
+                            <h5>Java</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/c.png">
+                            <h5>C</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/threejs.png">
+                            <h5>ThreeJS</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/sqlite.png">
+                            <h5>SQLite</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/dark-theme-github.png" id="githubIcon">
+                            <h5>GitHub</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/git.png">
+                            <h5>Git</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/figma.png">
+                            <h5>Figma</h5>
+                        </div>
+                        <div class="icon flex column flex-centered dark-theme-background">
+                            <img src="./icons/visual_studio_code.png">
+                            <h5>VS Code</h5>
+                        </div>
+                    </div>
+                    <div class="aboutme-text flex column dark-theme-background">
+                        <p class="dark-theme-text">Hello! My name is <b>Dawson Weilage</b> and I am an aspiring <b>Software Engineer/Web Developer</b>. Currently, I am a senior in college with a major in <b>Computer Science</b>. I enjoy learning about new technologies and solving real-world problems.</p> 
+                        <p class="dark-theme-text"> Whether it's <b>front-end design</b>, <b>back-end logic</b>, or <b>full-stack development</b>, I am always eager to explore new tools and frameworks. I thrive in <b>collaborative</b> environments where I can share ideas, learn from others, and contribute to meaningful solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="projects-container section flex dark-theme-background">
+            <div class="projects flex dark-theme-background">
+                <div class="project dark-theme-background flex column flex-centered">
+                    <img class="project-image" src="./static/libprotempgen.png">
+                    <h2 class="dark-theme-text">PERSONAL WEBSITE / PORTFOLIO</h2>
+                    <a href="https://github.com/dawsw/Portfolio" class="github-button dark-theme-text dark-theme-background flex flex-centered"><img src="/icons/dark-theme-github.png" style="width: 25px;" id="githubIcon">GitHub</a>
+                </div>
+                <div class="project dark-theme-background flex column flex-centered">
+                    <img class="project-image" src="./static/listn.png">
+                    <h2 class="dark-theme-text">LISTN - RATE YOUR FAVORITE MUSIC</h2>
+                    <a href="https://github.com/dawsw/LISTN" class="github-button dark-theme-text dark-theme-background flex flex-centered"><img src="/icons/dark-theme-github.png" style="width: 25px;" id="githubIcon">GitHub</a>
+                </div>
+                <div class="project dark-theme-background flex column flex-centered">
+                    <img class="project-image" src="./static/libprotempgen.png">
+                    <h2 class="dark-theme-text">LIBRARY PROCESSING TEMPLATE GENERATOR</h2>
+                    <a href="https://github.com/dawsw/Library-Processing-Template-Generator" class="github-button dark-theme-text dark-theme-background flex flex-centered"><img src="/icons/dark-theme-github.png" style="width: 25px;" id="githubIcon">GitHub</a>
+                </div>
+            </div>
+            <h1 class="section-header dark-theme-header" id="projects">PROJECTS</h1>
+        </div>
+        <div class="contact-container section flex dark-theme-background">
+            <div class="flex flex-centered column">
+
+                <h1 class="section-header dark-theme-header" id="contact">CONTACT</h1>
+            </div>
+            <div class="contact-right flex column dark-theme-background">
+                <a href="mailto:dawsw124@gmail.com" class="flex dark-theme-text">EMAIL</a>
+                <a href="#" class="flex dark-theme-text">LINKEDIN</a>
+                <a href="https://github.com/dawsw" class="flex dark-theme-text">GITHUB</a>
+            </div>
+        </div>
+    </main>
+    <footer class="flex column flex-centered dark-theme-background">
+        <p class="dark-theme-text">© 2025 Dawson Weilage. All rights reserved.</p>
+    </footer>
+
+<script src="script.js"></script>
+</body>
+</html>
