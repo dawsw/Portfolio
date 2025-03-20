@@ -18,12 +18,8 @@ html {
 
 
 body {
-    overflow: scroll !important;
+    
 }
-
-body::-webkit-scrollbar {
-    display: none; 
-  }
 
 
 .flex {
@@ -185,17 +181,17 @@ nav.light-theme-background {
 }
 
 .hi {
-    animation-delay: .25s;
-}
-
-.im {
     animation-delay: .75s;
 }
 
-.dawson {
-    animation-delay: 1.25s;
-
+.im {
+    animation-delay: 1.5s;
 }
+
+.dawson {
+    animation-delay: 2.25s;
+}
+
 .intro.dark-theme-text {
     color: rgb(0, 0, 0);
     text-shadow:

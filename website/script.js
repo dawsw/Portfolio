@@ -15,7 +15,7 @@ function switchTheme() {
     if (themeButton.src.includes('sun')) {
         themeButton.src = 'static/moon.svg';
         arrowImage.src = 'static/light-theme-arrow.svg'
-        logo.src = 'static/light-theme-logo.svg'
+        logoImage.src = 'static/light-theme-logo.svg'
 
         let backgrounds = document.querySelectorAll(".dark-theme-background");
         let texts = document.querySelectorAll(".dark-theme-text");
@@ -45,7 +45,7 @@ function switchTheme() {
     else { //if changing to dark theme
         themeButton.src = 'static/sun.svg';
         arrowImage.src = 'static/dark-theme-arrow.svg'
-        logo.src = 'static/dark-theme-logo.svg'
+        logoImage.src = 'static/dark-theme-logo.svg'
 
         let backgrounds = document.querySelectorAll(".light-theme-background");
         let texts = document.querySelectorAll(".light-theme-text");
@@ -74,12 +74,15 @@ function switchTheme() {
 };
 themeButton.addEventListener("click", switchTheme);
 
-/* window.addEventListener('scroll', function () {
-    let aboutMeHeader = this.document.getElementById('aboutMeHeader');
-    let currentY = this.window.scrollY;
+let topY = 0;
 
-    if (currentY > 500) {
-        aboutMeHeader.style.display = 'block';
-    }
-    console.log(currentY);
-}); */
+for (let i = 0; i < 100; i++) {
+    window.setTimeout(() => {
+        window.scrollTo({ top: topY, behavior: 'smooth' });
+
+        topY += 980;
+        if (topY > 2940) {
+            topY = 0;
+        }
+    }, 7000 * i); 
+}
