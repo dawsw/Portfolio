@@ -74,7 +74,7 @@ function switchTheme() {
 };
 themeButton.addEventListener("click", switchTheme);
 
-/*
+
 let topY = 0;
 
 for (let i = 0; i < 100; i++) {
@@ -88,4 +88,3 @@ for (let i = 0; i < 100; i++) {
     }, 7000 * i); 
 }
 
-*/
