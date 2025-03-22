@@ -22,7 +22,7 @@
       <h1>Welcome!</h1>
       <p>Feel free to look around and learn more about me by clicking on the Game Boy or Computer:</p>
       <div>
-        <img src="/assets/gameboyIcon-DYnoV5JL.png" alt="gameboyIcon">
+        <img src="/static/gameboyIcon.png" alt="gameboyIcon">
     
       </div>
       <button id="popup1-button" class="popup-button">continue</button>
@@ -34,12 +34,12 @@
       <h1>Controls</h1>
       <div class="controls-headers">
         <div class="control-button-container">
-          <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-tablet-smartphone'%3e%3crect%20width='10'%20height='14'%20x='3'%20y='8'%20rx='2'/%3e%3cpath%20d='M5%204a2%202%200%200%201%202-2h12a2%202%200%200%201%202%202v16a2%202%200%200%201-2%202h-2.4'/%3e%3cpath%20d='M8%2018h.01'/%3e%3c/svg%3e" class="controls-image">
+          <img src="/static/mobile.svg" class="controls-image">
           <button class="mobile-button active" id="mobile-button">Mobile</button>
         </div> 
         <h1 style="font-weight: 200;">/</h1>
         <div class="control-button-container">
-          <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='currentColor'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-keyboard'%3e%3cpath%20d='M10%208h.01'/%3e%3cpath%20d='M12%2012h.01'/%3e%3cpath%20d='M14%208h.01'/%3e%3cpath%20d='M16%2012h.01'/%3e%3cpath%20d='M18%208h.01'/%3e%3cpath%20d='M6%208h.01'/%3e%3cpath%20d='M7%2016h10'/%3e%3cpath%20d='M8%2012h.01'/%3e%3crect%20width='20'%20height='16'%20x='2'%20y='4'%20rx='2'/%3e%3c/svg%3e" class="controls-image">
+          <img src="/static/keyboard.svg" class="controls-image">
           <button class="desktop-button" id="desktop-button">Desktop</button>
         </div> 
       </div>
@@ -92,12 +92,12 @@
   <audio id="gbAudio">
     <source src="horse.ogg" type="audio/ogg">
   </audio> 
-  <button class="ui-button" id="backArrowButton"><img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23ffffff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-arrow-left'%3e%3cpath%20d='m12%2019-7-7%207-7'/%3e%3cpath%20d='M19%2012H5'/%3e%3c/svg%3e"></button>
+  <button class="ui-button" id="backArrowButton"><img src="/static/backArrow.svg"></button>
   <div class="right-gb-ui" id="rightGBUI">
-    <input type="image" src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23ffffff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-gamepad'%3e%3cline%20x1='6'%20x2='10'%20y1='12'%20y2='12'/%3e%3cline%20x1='8'%20x2='8'%20y1='10'%20y2='14'/%3e%3cline%20x1='15'%20x2='15.01'%20y1='13'%20y2='13'/%3e%3cline%20x1='18'%20x2='18.01'%20y1='11'%20y2='11'/%3e%3crect%20width='20'%20height='12'%20x='2'%20y='6'%20rx='2'/%3e%3c/svg%3e" id="showControlsButton"></input>
-    <input type="image" src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23ffffff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-volume-off'%3e%3cpath%20d='M16%209a5%205%200%200%201%20.95%202.293'/%3e%3cpath%20d='M19.364%205.636a9%209%200%200%201%201.889%209.96'/%3e%3cpath%20d='m2%202%2020%2020'/%3e%3cpath%20d='m7%207-.587.587A1.4%201.4%200%200%201%205.416%208H3a1%201%200%200%200-1%201v6a1%201%200%200%200%201%201h2.416a1.4%201.4%200%200%201%20.997.413l3.383%203.384A.705.705%200%200%200%2011%2019.298V11'/%3e%3cpath%20d='M9.828%204.172A.686.686%200%200%201%2011%204.657v.686'/%3e%3c/svg%3e" id="soundButton"></input>
+    <input type="image" src="/static/showControls.svg" id="showControlsButton"></input>
+    <input type="image" src="/static/soundOff.svg" id="soundButton"></input>
   </div>
-  <button class="ui-button" id="linkButton">VISIT<img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23ffffff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-external-link'%3e%3cpath%20d='M15%203h6v6'/%3e%3cpath%20d='M10%2014%2021%203'/%3e%3cpath%20d='M18%2013v6a2%202%200%200%201-2%202H5a2%202%200%200%201-2-2V8a2%202%200%200%201%202-2h6'/%3e%3c/svg%3e"></button>
+  <button class="ui-button" id="linkButton">VISIT<img src="/static/link.svg"></button>
   <iframe src="./portfolioScreen/index.html" id="pcScreen" class="pc-screen" hidden></iframe>
   <iframe src="./game/index.html" id="gameboyScreen" class="gameboy-screen visible" hidden></iframe>
 </body>
