@@ -1,0 +1,508 @@
+/* Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+
+* {
+    font-family:'Inter', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+
+}
+
+html {
+    font-size: 16px;
+}
+
+
+body {
+    
+}
+
+
+.flex {
+    display: flex;
+}
+
+.column {
+    flex-direction: column;
+}
+
+.flex-centered {
+    justify-content: center;
+    align-items: center;
+}
+
+.text-centered {
+    text-align: center;
+}
+
+.section {
+    height: 980px;
+}
+
+.section-header {
+    font-size: 6rem;
+    letter-spacing: -5px;
+    padding: 20px;
+}
+
+/* DARK THEME */
+.dark-theme-background {
+    background-color: rgb(10, 10, 10);
+    transition: background-color .75s ease;
+}
+
+
+.dark-theme-text {
+    color: rgb(199, 199, 199);
+    transition: color .75s ease;
+}
+
+.dark-theme-header {
+    color: rgb(255, 255, 255);
+    border: 3px solid rgb(255, 255, 255);
+    transition: color .75s ease;
+}
+
+
+/* LIGHT THEME */
+.light-theme-background {
+    background-color: rgb(226, 226, 211);
+    transition: background-color .75s ease;
+}
+
+.light-theme-text {
+    color: rgb(0, 0, 0);
+    transition: color .75s ease;
+}   
+
+.light-theme-header {
+    color: rgb(0, 0, 0);
+    border: 3px solid rgb(0, 0, 0);
+    transition: color .75s ease;
+}
+
+
+/* NAVBAR */
+nav {
+    position: sticky;
+    padding: 0 10% 0 10%;
+    justify-content: space-between;
+    z-index: 100;
+    min-height: 100px;
+}
+
+nav.dark-theme-background {
+    border-bottom: 1px solid rgb(156, 156, 156);
+}
+
+nav.light-theme-background {
+    background-color: white;
+    border-bottom: 1px solid black;
+}
+
+.nav-logo{
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    width: 50px;
+}
+
+.nav-right {
+    list-style-type: none;
+    gap: 50px;
+}
+
+.nav-right button{
+    padding: 0;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.nav-link.light-theme-text:hover{
+    border-bottom: 2px solid rgb(0, 0, 0);
+}
+
+.nav-link.dark-theme-text:hover{
+    border-bottom: 2px solid rgb(255, 255, 255);
+}
+
+#themeButton {
+    cursor: pointer;
+}
+
+/* HOME SECTION */
+
+.background-img{
+    position: absolute;
+    top: auto;
+    max-width: 1920px;
+    filter: opacity(30%) invert(.5) blur(0px);
+    z-index: 0;
+}
+
+.home-header {
+    padding-top: 350px;
+    z-index: 10;
+}
+
+.home-container {
+    width: 1920px;
+    height: 980px;
+}
+
+.home-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px; 
+    height: 980px;
+    background-image: url(static/background.png);
+    background-size: cover;
+    filter: opacity(30%) invert(.5) blur(0px);
+  }
+
+.intro {
+    opacity: 0;
+    z-index: 10;
+    animation-name: fadeInMoveUp;
+    animation-iteration-count: 1;
+	animation-timing-function: ease;
+    animation-fill-mode: forwards;
+	animation-duration: 1.5s;
+}
+
+.hi {
+    animation-delay: .75s;
+}
+
+.im {
+    animation-delay: 1.5s;
+}
+
+.dawson {
+    animation-delay: 2.25s;
+}
+
+.intro.dark-theme-text {
+    color: rgb(0, 0, 0);
+    text-shadow:
+    2px 2px 0 #ffffff,
+    -2px 2px 0 #ffffff,
+    -2px -2px 0 #ffffff,
+    2px -2px 0 #ffffff;
+    font-size: 8rem;
+    font-weight: 500;
+}
+
+
+.dawson.dark-theme-text {
+    color: white;
+    font-weight: 600;
+    text-shadow:
+    2px 2px 0 #000000,
+    -2px 2px 0 #000000,
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000;
+}
+
+.intro.light-theme-text {
+    color: rgb(255, 255, 255);
+    text-shadow:
+    2px 2px 0 #000000,
+    -2px 2px 0 #000000,
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000;
+    font-size: 8rem;
+    font-weight: 500;
+}
+
+.dawson.light-theme-text {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    text-shadow:
+    2px 2px 0 #000000,
+    -2px 2px 0 #000000,
+    -2px -2px 0 #000000,
+    2px -2px 0 #000000;
+}
+
+.title {
+    opacity: 0;
+    font-size: 1.5rem;
+    font-weight: 200;
+    animation-name: fadeIn;
+    animation-iteration-count: 1;
+	animation-timing-function: ease;
+    animation-fill-mode: forwards;
+	animation-duration: 2s;
+    animation-delay: 2.25s;
+    
+}
+
+.down-arrow {
+    width: 60px;
+    margin-top: 225px;
+    animation-name: moveUpDown;
+    animation-iteration-count: 1;
+	animation-timing-function: ease-in-out;
+    animation-duration: 1.5s;
+    animation-delay: 3.25s;
+}
+
+main {
+    padding: 0 50px 0 50px;
+}
+
+/* ABOUT ME SECTION */
+
+.aboutme-container {
+    width: 100%;
+    max-width: 1920px;
+    gap: 75px;
+    justify-content: space-between;
+}
+
+.aboutme-right{
+    padding: 20px;
+}
+
+.aboutme-text {
+    margin-top: 20px;
+    gap: 30px;
+    padding: 20px;
+    font-size: 1.25rem;
+    font-weight: 200;
+    max-width: 600px;
+    line-height: 30px;
+}
+
+.aboutme-text.dark-theme-background {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.733);
+}
+
+.aboutme-text.light-theme-background {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.664);
+}
+
+.icons-container {
+    gap: 20px;
+}
+
+.icons-header {
+    font-size: 1.4rem;
+}
+
+.icons {
+    flex-wrap: wrap;
+    max-width: 500px;
+    gap: 10px;
+}
+
+.icon {
+    max-width: 70px;
+    max-height: 105px;
+    gap: 20px;
+    border-radius: 10px;
+    padding: 15px;
+    transition: transform ease 300ms;
+    text-align: center;
+}
+
+.icon.dark-theme-background {
+    border: 1px solid rgba(150, 150, 150, 0.671);
+}
+
+.icon.light-theme-background {
+    border: 1px solid rgb(0, 0, 0);
+
+}
+
+.icon:hover {
+    transform: translate(0, -5px);
+}
+
+.icon img{
+    width: 40px;
+}
+
+
+.icon h5{
+    font-weight: 200;
+    font-size: .75rem;
+}
+
+/* PROJECTS SECTION */
+
+.projects-container {
+    width: 100%;
+    max-width: 1920px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.projects {
+    gap: 100px;
+    align-items: center;
+}
+
+.project {
+    border-radius: 10px;
+    min-height: 350px;
+    text-align: center;
+    width: 300px;
+    transition: transform ease-in-out 300ms;
+    gap: 25px;
+}
+
+.project:hover {
+    transform: translate(0, -20px);
+}
+
+.project.dark-theme-background {
+    border: 1px solid rgba(255, 255, 255, 0.295);
+}
+
+.project.light-theme-background {
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.project-image{
+    width: 250px;
+}
+
+.project h2 {
+    font-size: 1.25rem;
+    max-width: 250px;
+    
+}
+
+.project-divider {
+    width: 250px; 
+    height: 1px; 
+    background-color: rgba(128, 128, 128, 0.411);
+}
+
+.project-divider.dark-theme-background {
+    background-color: rgba(128, 128, 128, 0.411);
+}
+
+.project-divider.light-theme-background {
+    background-color: rgba(61, 61, 61, 0.651);
+}
+
+.github-button {
+    width: 100px;
+    gap: 5px;
+    border: 1px solid rgb(80, 80, 80);
+    border-radius: 10px;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.github-button.dark-theme-background:hover {
+    background-color: #000000c7;
+}
+
+.github-button.light-theme-background:hover {
+    background-color: #b8b8b8c7;
+}
+
+
+/* CONTACT SECTION */
+
+.contact-container {
+    width: 100%;
+    max-width: 1920px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.contact-right {
+    padding: 50px;
+    border-left: 2px solid white;
+    gap: 50px;
+}
+
+.contact-right.dark-theme-background {
+    border-left: 5px solid white;
+}
+
+.contact-right.light-theme-background {
+    border-left: 5px solid rgb(0, 0, 0);
+}
+
+.contact-right a{
+    align-items: center;
+    min-width: 250px;
+    font-size: 2.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform ease 300ms;
+}
+
+.contact-right a:hover{
+    font-weight: 700;
+    transform: scale(1.25);
+    transform: translate(10px);
+}
+
+.contact-right a:hover{
+    color: rgb(255, 255, 255);
+}
+
+.contact-right.light-theme-background a:hover{
+    color: rgb(0, 0, 0);
+}
+
+
+footer {
+    text-align: center;
+    height: 200px;
+}
+
+
+@keyframes fadeInMoveUp {
+	0% {
+		opacity: 0;
+        transform: translate(0px, 30px);
+	}
+	100% {
+		opacity: 1;
+        transform: translate(0px, 0px);
+	}
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes moveUpDown {
+	0% {
+        transform: translate(0px, 0px);
+	}
+
+    50% {
+        transform: translate(0px, -20px);
+	}
+
+	100% {
+		opacity: 1;
+        transform: translate(0px, 0px);
+	}
+}
