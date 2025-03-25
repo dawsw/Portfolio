@@ -10,9 +10,9 @@ gsap.registerPlugin(MotionPathPlugin);
 /////////// SEE IF MOBILE USER //////////////
 let mobileUser = false;
 
-if (( window.innerWidth <= 450 ) && ( window.innerHeight <= 900 ) || ( window.innerWidth <= 900 ) && ( window.innerHeight <= 450 )) {
+if (( window.innerWidth <= 550 ) && ( window.innerHeight <= 900 ) || ( window.innerWidth <= 900 ) && ( window.innerHeight <= 450 )) {
   mobileUser = true;
-}
+};
 
 
 /////////// LOADING MANAGER //////////////
@@ -20,20 +20,22 @@ const loadingManager = new THREE.LoadingManager();
 const gltfLoader = new GLTFLoader(loadingManager);
 
 const progressBarContainer = document.querySelector('.progress-bar-container');
-const progressBar = document.getElementById('progress-bar');
 const progressBarLabel = document.getElementById('progress-bar-label');
+const loadingCircle = document.getElementById('loadingCircle');
 
-
-loadingManager.onProgress = function (url, loaded, total) {
-  progressBar.value = (loaded / total) * 100;
-};
 
 loadingManager.onLoad = function () {
   progressBarContainer.classList.add('hidden');
-  progressBar.style.display = 'none';
-  progressBarLabel.style.display = 'none';
 
-  gameboyScreenHTML.removeAttribute('hidden'); 
+  //progressBarLabel.style.display = 'none';
+  //loadingCircle.style.display = 'none';
+  
+  gameboyScreenHTML.removeAttribute('hidden');
+  
+  if (mobileUser == false) {
+    pcScreenHTML.removeAttribute('hidden'); 
+  }
+
   window.setTimeout(() => {
     //show popup
     popUp1.style.display = 'flex';
@@ -109,9 +111,11 @@ cssRenderer.setSize(w, h);
 cssRenderer.domElement.style.position = 'absolute';
 document.body.appendChild(cssRenderer.domElement);
 
+
 //WebGLRenderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(w, h);
+if (mobileUser) renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
 document.body.appendChild(renderer.domElement);
 
 //update camera/renderer sizes
@@ -127,28 +131,48 @@ window.addEventListener("resize", () => {
 const orbitControls = new OrbitControls(camera, renderer.domElement);
 orbitControls.rotateSpeed = '.25';
 orbitControls.enableDamping = true;
-orbitControls.dampingFactor = '0.03'
+orbitControls.dampingFactor = '0.07'
 orbitControls.enablePan = false;
 orbitControls.enableZoom = false;
 
 
 //camera limits
-const angle = (30 * Math.PI) / 180; // Convert 30 degrees to radians
+const angle30 = (30 * Math.PI) / 180; // Convert 30 degrees to radians
+const angle60 = (60 * Math.PI) / 180;
 const centerAngle = Math.PI / 2; //default angle
 
-function setCameraLimits() {
-  orbitControls.minAzimuthAngle = -angle; //30 left
-  orbitControls.maxAzimuthAngle = angle; //30 right
+function setSpawnCameraLimits() {
+  orbitControls.minAzimuthAngle = -angle30; //30 left
+  orbitControls.maxAzimuthAngle = angle30; //30 right
 
-  orbitControls.minPolarAngle = centerAngle - angle; //30 down
-  orbitControls.maxPolarAngle = centerAngle + angle; //30 up
+  orbitControls.minPolarAngle = centerAngle - angle30; //30 down
+  orbitControls.maxPolarAngle = centerAngle + angle30; //30 up
 };
 
-setCameraLimits();
+function setPCCameraLimits() {
+  orbitControls.minAzimuthAngle = -angle60; 
+  orbitControls.maxAzimuthAngle = (-20 * Math.PI) / 180; 
+
+  orbitControls.minPolarAngle = centerAngle - angle30;
+  orbitControls.maxPolarAngle = centerAngle + ((15 * Math.PI) / 180); 
+};
+
+function removeCameraLimits() {
+  orbitControls.minPolarAngle = 0;
+  orbitControls.maxPolarAngle = Math.PI;
+
+  orbitControls.minAzimuthAngle = -Infinity;  
+  orbitControls.maxAzimuthAngle = Infinity;  
+
+  orbitControls.minDistance = 0;
+  orbitControls.maxDistance = Infinity;
+}
+
+setSpawnCameraLimits();
 
 
 /////////// LIGHTS //////////////
-const lampLight = new THREE.RectAreaLight( 0xfaf3b9, 15.0, 2, 1 );
+const lampLight = new THREE.RectAreaLight( 0xfaef91, 20.0, 2, 1 );
 lampLight.rotateX(-2.2 );
 lampLight.position.set( -2, -2.5, -7.1 );
 
@@ -162,7 +186,7 @@ scene.add(lampLight, roomLight)
 /////////// BEDROOM MODEL //////////////
 let bedroomModel;
 gltfLoader.load(
-  'models/bedroom/scene.gltf',
+  '/models/bedroom/bedroom.glb',
 
   function (gltf) {
     bedroomModel = gltf.scene;
@@ -178,7 +202,7 @@ gltfLoader.load(
 let gameboyModel;
 
 gltfLoader.load(
-  'models/gameboy/scene.gltf',
+  '/models/gameboy/scene.gltf',
   function (gltf) {
     gameboyModel = gltf.scene;
     gameboyModel.rotation.x += -1.5;
@@ -280,8 +304,41 @@ else {
 gameboyScreenObject.rotateX(-1.5);
 gameboyScreenObject.rotateY(-.01);
 gameboyScreenObject.scale.set(0.004, 0.0036, 0.0038);
-cssRenderer.domElement.style.pointerEvents = 'none';
 scene.add(gameboyScreenObject);
+
+
+
+/////////// PC SCREEN (WEBSITE) //////////////
+const pcScreenHTML = document.getElementById('pcScreen');
+
+if (mobileUser) {
+  const textureLoader = new THREE.TextureLoader();
+  const imageTexture = textureLoader.load('./static/portfolioIMG.png');
+
+  imageTexture.colorSpace = THREE.SRGBColorSpace; 
+
+  imageTexture.minFilter = THREE.LinearFilter;
+  imageTexture.magFilter = THREE.NearestFilter;
+
+  const planeGeometry = new THREE.PlaneGeometry(5, 3); // Adjust the size of the plane
+  const planeMaterial = new THREE.MeshBasicMaterial({ map: imageTexture, side: THREE.DoubleSide }); // Applying the image texture
+  const pcScreenIMG = new THREE.Mesh(planeGeometry, planeMaterial);
+
+  pcScreenIMG.rotateY(-.715);
+  pcScreenIMG.position.set(6.4, -4.37, -6.625);
+  pcScreenIMG.scale.x = 1.115;
+  pcScreenIMG.scale.y = 1.09;
+  scene.add(pcScreenIMG);
+
+} else {
+  const pcScreenObject = new CSS3DObject(pcScreenHTML); 
+  pcScreenObject.position.set(6.4, -4.37, -6.6);
+  pcScreenObject.rotateY(-.71);
+  pcScreenObject.scale.set(0.00291, 0.00302);
+  scene.add(pcScreenObject);
+}
+
+cssRenderer.domElement.style.pointerEvents = 'none';
 
 
 /////////// SWITCH SCREEN COVER //////////////
@@ -298,44 +355,25 @@ scene.add(screenSquare);
 
 /////////// FUNCTIONS //////////////
 
-function displayUI() {
-  let backArrow = document.getElementById('backArrowButton');
-  let controlsButton = document.getElementById('showControlsButton');
-  
-  backArrow.addEventListener('click', function() {
-    zoomOutOfGB();
-
-    backArrow.style.display = 'none';
-    controlsButton.style.display = 'none';
-  });
-
-  controlsButton.addEventListener('click', function() {
-    popUp2.style.display = 'flex';
-  });
-
-  backArrow.style.display = 'block';
-  controlsButton.style.display = 'block';
-};
-
-
-let shownPopUp2 = false;
 //function to animate camera along the path to the GB
-function zoomIntoGB(cameraX, cameraY, cameraZ) {
+let shownPopUp2 = false;
+
+function zoomIntoGB() {
   let pathToGB;
 
-  //allow full vertical orbitControls
-  orbitControls.minPolarAngle = 0;
-  orbitControls.maxPolarAngle = Math.PI;
+  //allow full orbitControls
+  removeCameraLimits();
+  orbitControls.enableZoom = false;
 
   //camera curve path
   if (mobileUser) {
     pathToGB = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(cameraX, cameraY, cameraZ), //camera's current position
+      new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z), //camera's current position
       new THREE.Vector3(0, -5.45, -5.15) //final position
     ]);
   } else {
     pathToGB = new THREE.CatmullRomCurve3([
-      new THREE.Vector3(cameraX, cameraY, cameraZ), //camera's current position
+      new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z), //camera's current position
       new THREE.Vector3(0, -5.65, -5.15) //final position
     ]);
   };
@@ -375,45 +413,43 @@ function zoomIntoGB(cameraX, cameraY, cameraZ) {
 
 
 function zoomOutOfGB() {
-  let pathToSpawn;
-  let controlTarget = -7.5;
+  let gbPathToSpawn;
+  let cameraTargetY = -7.5;
 
-  //allow full vertical orbitControls
-  orbitControls.minPolarAngle = 0;
-  orbitControls.maxPolarAngle = Math.PI;
-  orbitControls.minDistance=0;
-  orbitControls.maxDistance=Infinity;
+  //allow full orbitControls
+  removeCameraLimits();
   orbitControls.enableZoom = false;
-  
+
   //camera curve path
-  pathToSpawn = new THREE.CatmullRomCurve3([
-    new THREE.Vector3(0, -4.45, -5.15),
+  gbPathToSpawn = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z),
     new THREE.Vector3(spawnX, spawnY, spawnZ) //final position
   ]);
 
   gsap.to((camera.position), {
     motionPath: {
-      path: pathToSpawn.getPoints(200),
+      path: gbPathToSpawn.getPoints(250),
       autoRotate: false,
       curviness: 2,
     },
     duration: 2,
-    ease: "power2",
+    ease: "power2.out",
     onUpdate: () => {
       orbitControls.enableRotate = false;
 
       if (mobileUser) {
-        controlTarget = controlTarget + 0.035
+        cameraTargetY = cameraTargetY + 0.0625
       } else {
-        controlTarget = controlTarget + 0.022
+        cameraTargetY = cameraTargetY + 0.022
       };
 
-      orbitControls.target.set(0, controlTarget, -5.4);
+      orbitControls.target.set(0, cameraTargetY, -5.4);
       orbitControls.update();
+      //console.log(orbitControls.target)
     },
     onComplete: () => {
+      setSpawnCameraLimits();
       orbitControls.enableRotate = true; 
-      setCameraLimits();
       orbitControls.target.set(0, 0, 0);
       cameraOnGB = false;
     }
@@ -421,32 +457,124 @@ function zoomOutOfGB() {
 };
 
 
-//move camera to GB if clicked
-let cameraOnGB = false;
+function zoomIntoPC() {
+  let pathToPC;
 
-function onGBClick(event) {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+  //allow full orbitControls
+  removeCameraLimits();
+  orbitControls.enableZoom = false;
+  orbitControls.enableRotate = false; 
 
-  raycaster.setFromCamera(mouse, camera);
+  orbitControls.target.set(6.32, -4.442, -6.48)
 
-  var intersects = raycaster.intersectObjects(scene.children, true);
+  //camera curve path
+  pathToPC = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z), //camera's current position
+    new THREE.Vector3(2.7, -4.42, -2.31) //final position
+    //4.84, -4.44, -4.79
+  ]);
 
-  //move camera to GB if clicked
-  if (intersects.length > 0 && cameraOnGB == false) {
-    if (intersects[0]['object']['name'].includes("Gameboy") || intersects[1]['object']['name'].includes("Gameboy")) {
-      zoomIntoGB(camera.position.x, camera.position.y, camera.position.z);
-      cameraOnGB = true;
-      //focus on screen
-        gameboyScreenHTML.contentWindow.focus();
+  gsap.to((camera.position), {
+    motionPath: {
+      path: pathToPC.getPoints(200),
+      autoRotate: false,
+      curviness: 0,
+    },
+    duration: 2,
+    ease: "power2",
+    onUpdate: () => {
+      orbitControls.update();
+    },
+    onComplete: () => {
+      setPCCameraLimits();
+      displayUI();
+      cameraOnPC = true;
+      orbitControls.enableZoom = true;
+      orbitControls.maxDistance = 8;
 
+      if (mobileUser) {
+        orbitControls.minDistance = 3.5;
+      } else {
+        orbitControls.enableRotate = true; 
+        orbitControls.minDistance = 2;
+      };
     }
-  }
+  });
 };
 
 
-//change cursor when hovering over GB
-function onGBHover(event) {
+function zoomOutOfPC() {
+  let pcPathToSpawn;
+  let cameraXTarget = 6.32;
+  let cameraYTarget = -4.44;
+
+  //allow full orbitControls
+  removeCameraLimits();
+  orbitControls.enableZoom = false;
+  
+  //camera curve path
+  pcPathToSpawn = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z),
+    new THREE.Vector3(spawnX, spawnY, spawnZ) //final position
+  ]);
+ 
+  gsap.to((camera.position), {
+    motionPath: {
+      path: pcPathToSpawn.getPoints(250),
+      autoRotate: false,
+      curviness: 2,
+    },
+    duration: 2,
+    ease: "power2.out",
+    onUpdate: () => {
+      orbitControls.enableRotate = false;
+
+      if (mobileUser) {
+        cameraXTarget = cameraXTarget - 0.052
+        cameraYTarget = cameraYTarget + 0.037
+      } else {
+        cameraXTarget = cameraXTarget - 0.019
+        cameraYTarget = cameraYTarget + 0.01368
+  
+      };
+      
+      orbitControls.target.set(cameraXTarget, cameraYTarget, -6.5);
+      orbitControls.update();
+      console.log(orbitControls.target)
+    },
+    onComplete: () => {
+      setSpawnCameraLimits();
+      orbitControls.enableRotate = true; 
+      orbitControls.target.set(0, 0, 0);
+      cameraOnPC = false;
+    }
+  });
+};
+
+const backArrow = document.getElementById('backArrowButton');
+const controlsButton = document.getElementById('showControlsButton');
+const rightGBUI = document.getElementById('rightGBUI')
+const linkButton = document.getElementById('linkButton');
+const soundButton = document.getElementById('soundButton');
+const gbAudio = document.getElementById('gbMusic');
+
+function displayUI() {
+    backArrow.style.display = 'block';
+
+    if (cameraOnGB == true) {
+      rightGBUI.style.display = 'flex';
+    } else if (cameraOnPC == true) {
+      linkButton.style.display = 'flex';
+    };
+
+};
+
+
+let cameraOnPC = false;
+let cameraOnGB = false;
+
+//change cursor when hovering over GB/Keyboard
+function onItemHover(event) {
   mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
   mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
@@ -455,15 +583,39 @@ function onGBHover(event) {
   var intersects = raycaster.intersectObjects(scene.children, true);
   //console.log('0:' + intersects[0]['object']['name'], '1:' + intersects[1]['object']['name'], '2:' + intersects[2]['object']['name'])
 
-  if (intersects.length > 0) {
-    if (intersects[0]['object']['name'].includes("Gameboy") || intersects[0]['object']['name'].includes("Button")) {  
+  
+  if ((intersects[0]['object']['name'].includes("Gameboy") && cameraOnGB == false) || (intersects[0]['object']['name'].includes("Computer") && cameraOnPC == false)) {  
       document.body.style.cursor = "pointer";
     } else {
       document.body.style.cursor = "default";
     }
-  }
-};
+  };
 
+//move camera to GB if clicked
+function onItemClick(event) {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+  raycaster.setFromCamera(mouse, camera);
+
+  var intersects = raycaster.intersectObjects(scene.children, true);
+
+  //move camera to GB if clicked
+  if (intersects[0]['object']['name'].includes("Gameboy") || intersects[1]['object']['name'].includes("Gameboy")) {
+    if (intersects.length > 0 && cameraOnGB == false) {
+      zoomIntoGB();
+      cameraOnGB = true;
+      //focus on screen
+        gameboyScreenHTML.contentWindow.focus();
+
+    }
+  } else if ((intersects[0]['object']['name'].includes("Computer") || intersects[1]['object']['name'].includes("Computer"))) {
+      if(intersects.length > 0 && cameraOnPC == false) {
+        zoomIntoPC();
+        cameraOnPC = true;
+    }
+  };
+};
 
 //change cursor when hovering over GB buttons while camera on GB
 function onGBButtonHover(event) {
@@ -499,7 +651,7 @@ function simulateKeyRelease(key) {
 
 let previousButton;
 
-//simulate key press if GB button is clicked/pressed
+//simulate key press if GB button is clicked/touched
 function onGBButtonPress(event) {
   let clientX, clientY;
 
@@ -647,7 +799,7 @@ renderer.domElement.addEventListener("mousemove", (event) => {
     if (mouseDown && event.button === 0) onGBButtonDrag(event);
     
   } else { //change cursor when GB is hovered & camera not on GB
-    onGBHover(event);
+    onItemHover(event);
   }
 });
 
@@ -684,15 +836,45 @@ renderer.domElement.addEventListener("touchend", (event) => {
 renderer.domElement.addEventListener("click", (event) => {
   if (cameraOnGB) {
       gameboyScreenHTML.contentWindow.focus();
-  } else {
-    onGBClick(event);
+  } else if (cameraOnPC == false) {
+    onItemClick(event);
   }
 });
-
 
 //prevent user from right-clicking
 document.addEventListener('contextmenu', function(event) {
   gameboyScreenHTML.contentWindow.focus();
+});
+
+//ui controls
+backArrow.addEventListener('click', function() {
+  backArrow.style.display = 'none';
+
+  if (cameraOnGB == true) {
+    rightGBUI.style.display = 'none';
+    zoomOutOfGB();
+  } else {
+    linkButton.style.display = 'none';
+    zoomOutOfPC();
+  }
+});
+
+controlsButton.addEventListener('click', function() {
+  popUp2.style.display = 'flex';
+});
+
+soundButton.addEventListener('click', function() {
+  if (soundButton.src.endsWith('soundOff.svg')) {
+    soundButton.src = '/static/soundOn.svg';
+    gbAudio.volume = 0.75;
+  } else {
+    soundButton.src = '/static/soundOff.svg';
+    gbAudio.volume = 0;
+  }
+});
+
+linkButton.addEventListener('click', function() {
+  window.location.href = "https://dawsonweilage.com/portfolio";
 });
 
 
@@ -701,6 +883,8 @@ function animate() {
   renderer.render(scene, camera);
   cssRenderer.render(scene, camera);
   orbitControls.update();
+
+  //console.log(camera.position.x, camera.position.y, camera.position.z);
 };
 
 
