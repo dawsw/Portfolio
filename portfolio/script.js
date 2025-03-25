@@ -1,91 +1,80 @@
-/* 
+let hamIcon = document.getElementById('hamIcon');
+let hamLinks = document.getElementById('hamLinks');
 
-window.addEventListener('load', function () {
-    window.scrollTo({top: 0, behavior: 'instant'});
+hamLinks.style.display = 'none';
+
+hamIcon.addEventListener('click', function () {
+    if (hamLinks.style.display == 'none') {
+        hamLinks.style.display = 'flex'
+    } else {
+        hamLinks.style.display = 'none'
+    }
 });
 
-*/
+let themeButton = document.getElementById('themeButton');
 
-function switchTheme() {
-    let themeButton = document.getElementById('themeButton');
-    let arrowImage = document.getElementById('downArrow');
-    let logoImage = document.getElementById('logo')
-    
-    //if changing to light theme
-    if (themeButton.src.includes('sun')) {
+themeButton.addEventListener('click', function () {
+    let currentTheme = document.getElementsByClassName('dark-theme');
+    let darkNavFooter = document.querySelectorAll('.dark-theme-nav-footer');
+    let lightNavFooter = document.querySelectorAll('.light-theme-nav-footer');
+    let hiIm = document.querySelectorAll('.hi-im');
+    let darkIcons = document.querySelectorAll('.dark-theme-icon');
+    let lightIcons = document.querySelectorAll('.light-theme-icon');
+    let links = document.querySelectorAll('.link');
+ 
+
+    //if switching to light mode
+    if (currentTheme.length >= 1) {
         themeButton.src = 'static/moon.svg';
-        arrowImage.src = 'static/light-theme-arrow.svg'
-        logoImage.src = 'static/light-theme-logo.svg'
+        
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
 
-        let backgrounds = document.querySelectorAll(".dark-theme-background");
-        let texts = document.querySelectorAll(".dark-theme-text");
-        let headers = document.querySelectorAll(".dark-theme-header");
-        let githubImages = document.querySelectorAll('#githubIcon');
 
-        backgrounds.forEach(background => {
-            background.classList.remove('dark-theme-background');
-            background.classList.add('light-theme-background');
+        darkNavFooter.forEach(_ => {
+            _.classList.remove('dark-theme-nav-footer');
+            _.classList.add('light-theme-nav-footer');
         });
 
-        texts.forEach(text => {
-            text.classList.remove('dark-theme-text');
-            text.classList.add('light-theme-text');
+        hiIm.forEach(word => {
+            word.classList.remove('dark-theme-hi-im');
+            word.classList.add('light-theme-hi-im');
         });
 
-        headers.forEach(header => {
-            header.classList.remove('dark-theme-header');
-            header.classList.add('light-theme-header');
+        darkIcons.forEach(icon => {
+            icon.classList.remove('dark-theme-icon');
+            icon.classList.add('light-theme-icon');
         });
 
-        githubImages.forEach(img => {
-            img.src = 'icons/light-theme-github.png'
+        links.forEach(link => {
+            link.classList.remove('dark-theme-icon');
+            link.classList.add('light-theme-icon');
         });
-
-    } 
-    else { //if changing to dark theme
+        
+    } else { //if switching to dark mode
         themeButton.src = 'static/sun.svg';
-        arrowImage.src = 'static/dark-theme-arrow.svg'
-        logoImage.src = 'static/dark-theme-logo.svg'
 
-        let backgrounds = document.querySelectorAll(".light-theme-background");
-        let texts = document.querySelectorAll(".light-theme-text");
-        let headers = document.querySelectorAll(".light-theme-header");
-        let githubImages = document.querySelectorAll('#githubIcon');
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
 
-        backgrounds.forEach(background => {
-            background.classList.remove('light-theme-background');
-            background.classList.add('dark-theme-background');
+        lightNavFooter.forEach(_ => {
+            _.classList.remove('light-theme-nav-footer');
+            _.classList.add('dark-theme-nav-footer');
         });
 
-        texts.forEach(text => {
-            text.classList.remove('light-theme-text');
-            text.classList.add('dark-theme-text');
+        hiIm.forEach(word => {
+            word.classList.remove('light-theme-hi-im');
+            word.classList.add('dark-theme-hi-im');
         });
 
-        headers.forEach(header => {
-            header.classList.remove('light-theme-header');
-            header.classList.add('dark-theme-header');
+        lightIcons.forEach(icon => {
+            icon.classList.remove('light-theme-icon');
+            icon.classList.add('dark-theme-icon');
         });
 
-        githubImages.forEach(img => {
-            img.src = 'icons/dark-theme-github.png'
+        links.forEach(link => {
+            link.classList.remove('light-theme-icon');
+            link.classList.add('dark-theme-icon');
         });
     }
-};
-themeButton.addEventListener("click", switchTheme);
-
-/*
-let topY = 0;
-
-for (let i = 0; i < 100; i++) {
-    window.setTimeout(() => {
-        window.scrollTo({ top: topY, behavior: 'smooth' });
-
-        topY += 980;
-        if (topY > 2940) {
-            topY = 0;
-        }
-    }, 7000 * i); 
-}
-
-*/
+})
