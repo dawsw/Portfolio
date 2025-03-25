@@ -268,7 +268,7 @@ main {
     width: 100%;
     max-width: 1920px;
     gap: 75px;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .aboutme-right{
@@ -345,7 +345,7 @@ main {
 .projects-container {
     width: 100%;
     max-width: 1920px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 }
 
@@ -423,7 +423,7 @@ main {
 .contact-container {
     width: 100%;
     max-width: 1920px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 }
 
