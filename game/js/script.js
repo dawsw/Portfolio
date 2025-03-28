@@ -60,6 +60,7 @@ const REWIND_UPDATE_MS = 16;
 const GAMEPAD_POLLING_INTERVAL = 1000 / 60 / 4; // When activated, poll for gamepad input about ~4 times per gameboy frame (~240 times second)
 const GAMEPAD_KEYMAP_STANDARD_STR = "standard"; // Try to use "standard" HTML5 mapping config if available
 
+
 const $ = document.querySelector.bind(document);
 let emulator = null;
 
@@ -80,6 +81,9 @@ if (sgbEnabled) {
   $("canvas").width = SCREEN_WIDTH;
   $("canvas").height = SCREEN_HEIGHT;
 }
+
+let windowSoundButton = parent.document.querySelector('#soundButton');
+
 
 // Extract stuff from the vue.js implementation in demo.js.
 class VM {
@@ -181,11 +185,24 @@ class Emulator {
       throw new Error("Invalid ROM.");
     }
 
+
     this.gamepad = new Gamepad(module, this.e);
     this.audio = new Audio(module, this.e);
     this.video = new Video(module, this.e, $("canvas"));
     this.rewind = new Rewind(module, this.e);
     this.rewindIntervalId = 0;
+    this.audioPlaying = true;
+
+    windowSoundButton.addEventListener('click', () => {
+      if (this.audioPlaying == true) {
+        this.audio.pause();
+        this.audioPlaying = false;
+      } else {
+        this.audio.resume();
+        this.audioPlaying = true;
+      }
+
+    });
 
     this.lastRafSec = 0;
     this.leftoverTicks = 0;
@@ -1050,6 +1067,7 @@ class Audio {
 }
 
 Audio.ctx = new AudioContext();
+
 
 class Video {
   constructor(module, e, el) {
