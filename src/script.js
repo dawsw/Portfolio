@@ -29,16 +29,17 @@ loadingManager.onLoad = function () {
 
   //progressBarLabel.style.display = 'none';
   //loadingCircle.style.display = 'none';
-  
-  gameboyScreenHTML.style.opacity = '1';
+
+  gameboyScreenHTML.removeAttribute('hidden');
   
   if (mobileUser == false) {
-    pcScreenHTML.style.opacity = '1';
+    pcScreenHTML.removeAttribute('hidden');
   }
 
   window.setTimeout(() => {
     //show popup
     popUp1.style.display = 'flex';
+    gameboyScreenHTML.style.opacity = '1';
   }, 3000);
 };
 
