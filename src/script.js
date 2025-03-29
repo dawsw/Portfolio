@@ -30,10 +30,10 @@ loadingManager.onLoad = function () {
   //progressBarLabel.style.display = 'none';
   //loadingCircle.style.display = 'none';
   
-  gameboyScreenHTML.removeAttribute('hidden');
+  gameboyScreenHTML.style.opacity = '1';
   
   if (mobileUser == false) {
-    pcScreenHTML.removeAttribute('hidden'); 
+    pcScreenHTML.style.opacity = '1';
   }
 
   window.setTimeout(() => {
