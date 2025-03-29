@@ -46,19 +46,29 @@ loadingManager.onLoad = function () {
 /////////// POPUPS //////////////
 const popUp1 = document.getElementById('popup1-wrapper');
 const popUp1Button = document.getElementById('popup1-button');
-const popUp2 = document.getElementById('popup2-wrapper');
-const popUp2Button = document.getElementById('popup2-button');
-const popUp2MobileButton = document.getElementById('mobile-button');
-const popUp2DesktopButton = document.getElementById('desktop-button');
-const popUp2MobileControls = document.getElementById('mobile-controls');
-const popUp2DesktopControls = document.getElementById('desktop-controls');
+
+const settingsWrapper = document.getElementById('settings-wrapper');
+const settingsExitButton = document.getElementById('settings-exit-button');
+const originalScreenButton = document.getElementById('originalScreenButton');
+const ipsScreenButton = document.getElementById('ipsScreenButton');
+const dimLampButton = document.getElementById('dimLampButton');
+const normalLampButton = document.getElementById('normalLampButton');
+const brightLampButton = document.getElementById('brightLampButton');
+
+
+const controlsWrapper = document.getElementById('controls-wrapper');
+const controlsExitButton = document.getElementById('controls-exit-button');
+const controlsMobileButton = document.getElementById('mobile-button');
+const controlsDesktopButton = document.getElementById('desktop-button');
+const controlsMobileControls = document.getElementById('mobile-controls');
+const controlsDesktopControls = document.getElementById('desktop-controls');
 
 popUp1Button.addEventListener('click', () => {
   popUp1.style.display = 'none';
 });
 
-popUp2Button.addEventListener('click', () => {
-  popUp2.style.display = 'none';
+controlsExitButton.addEventListener('click', () => {
+  controlsWrapper.style.display = 'none';
 
   //focus on GB screen
   gameboyScreenHTML.contentWindow.focus();
@@ -66,30 +76,98 @@ popUp2Button.addEventListener('click', () => {
 });
 
 //click event listener for changing active controls header
-popUp2MobileButton.addEventListener('click', function () {
-  popUp2MobileButton.classList.remove('active');
-  popUp2DesktopButton.classList.remove('active');
+controlsMobileButton.addEventListener('click', function () {
+  controlsMobileButton.classList.remove('active');
+  controlsDesktopButton.classList.remove('active');
 
-   //show mobile controls
-  popUp2MobileControls.removeAttribute('hidden');
-  popUp2DesktopControls.setAttribute('hidden', true);
+  //show mobile controls
+  controlsMobileControls.removeAttribute('hidden');
+  controlsDesktopControls.setAttribute('hidden', true);
 
   //make header active
   this.classList.add('active');
 });
 
-popUp2DesktopButton.addEventListener('click', function () {
-  popUp2MobileButton.classList.remove('active');
-  popUp2DesktopButton.classList.remove('active');
+controlsDesktopButton.addEventListener('click', function () {
+  controlsMobileButton.classList.remove('active');
+  controlsDesktopButton.classList.remove('active');
 
   //show desktop controls
-  popUp2DesktopControls.removeAttribute('hidden');
-  popUp2MobileControls.setAttribute('hidden', true);
+  controlsDesktopControls.removeAttribute('hidden');
+  controlsMobileControls.setAttribute('hidden', true);
   
   //make header active
   this.classList.add('active');
 });
 
+settingsExitButton.addEventListener('click', function () {
+  settingsWrapper.style.display = 'none';
+});
+
+originalScreenButton.addEventListener('click', function () {
+  ipsScreenButton.classList.remove('setting-active');
+  this.classList.add('setting-active');
+
+  gameboyScreenHTML.classList.remove('ips-screen');
+  gameboyScreenHTML.style.filter = '';
+  gameboyScreenHTML.classList.add('original-screen');
+
+  //make sure dim/bright filter is on depending on lamp brightness
+  if (lampLight.intensity == 2) {
+    gameboyScreenHTML.style.filter = 'brightness(10%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(25%) blur(.3px) contrast(1.15)';
+  } 
+  else if (lampLight.intensity == 35) {
+    gameboyScreenHTML.style.filter = 'brightness(45%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(40%) blur(.3px) contrast(1.25)';
+  }
+});
+
+ipsScreenButton.addEventListener('click', function () {
+  originalScreenButton.classList.remove('setting-active');
+  this.classList.add('setting-active');
+
+  gameboyScreenHTML.classList.remove('original-screen');
+  gameboyScreenHTML.style.filter = '';
+  gameboyScreenHTML.classList.add('ips-screen');
+});
+
+dimLampButton.addEventListener('click', function () {
+  normalLampButton.classList.remove('setting-active');
+  brightLampButton.classList.remove('setting-active');
+  this.classList.add('setting-active');
+
+  lampLight.intensity = 2;
+
+  //add dim filter
+  if (gameboyScreenHTML.classList.contains('original-screen')) {
+    gameboyScreenHTML.style.filter = 'brightness(10%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(25%) blur(.3px) contrast(1.15)';
+  }
+});
+
+normalLampButton.addEventListener('click', function () {
+  dimLampButton.classList.remove('setting-active');
+  brightLampButton.classList.remove('setting-active');
+  this.classList.add('setting-active');
+
+  lampLight.intensity = 20;
+
+  //add original filter
+  if (gameboyScreenHTML.classList.contains('original-screen')) {
+    gameboyScreenHTML.style.filter = 'brightness(35%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(30%) blur(.3px) contrast(1.15)';
+  }
+});
+
+brightLampButton.addEventListener('click', function () {
+  normalLampButton.classList.remove('setting-active');
+  dimLampButton.classList.remove('setting-active');
+  this.classList.add('setting-active');
+
+  lampLight.intensity = 35;
+
+  //add brighter filter
+  if (gameboyScreenHTML.classList.contains('original-screen')) {
+    gameboyScreenHTML.style.filter = 'brightness(45%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(40%) blur(.3px) contrast(1.25)';
+  }
+});
 
 
 /////////// THREEJS SCENE //////////////
@@ -115,7 +193,7 @@ document.body.appendChild(cssRenderer.domElement);
 //WebGLRenderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(w, h);
-if (mobileUser) renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1));
+if (mobileUser) renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
 document.body.appendChild(renderer.domElement);
 
 //update camera/renderer sizes
@@ -172,7 +250,7 @@ setSpawnCameraLimits();
 
 
 /////////// LIGHTS //////////////
-const lampLight = new THREE.RectAreaLight( 0xfaef91, 20.0, 2, 1 );
+const lampLight = new THREE.RectAreaLight( 0xfaef91, 20.0, 2, 2 );
 lampLight.rotateX(-2.2 );
 lampLight.position.set( -2, -2.5, -7.1 );
 
@@ -356,7 +434,7 @@ scene.add(screenSquare);
 /////////// FUNCTIONS //////////////
 
 //function to animate camera along the path to the GB
-let shownPopUp2 = false;
+let shownControls = false;
 
 function zoomIntoGB() {
   let pathToGB;
@@ -398,15 +476,15 @@ function zoomIntoGB() {
       orbitControls.minDistance=1;
       orbitControls.maxDistance=2;
 
-      if (shownPopUp2 == false) {
+      if (shownControls == false) {
         window.setTimeout(() => {
           //show controls popup
-          popUp2.style.display = 'flex';
+          controlsWrapper.style.display = 'flex';
           displayUI();
         }, 250);
       } else displayUI();
 
-      shownPopUp2 = true;
+      shownControls = true;
     }
   });
 };
@@ -540,7 +618,6 @@ function zoomOutOfPC() {
       
       orbitControls.target.set(cameraXTarget, cameraYTarget, -6.5);
       orbitControls.update();
-      console.log(orbitControls.target)
     },
     onComplete: () => {
       setSpawnCameraLimits();
@@ -555,8 +632,8 @@ const backArrow = document.getElementById('backArrowButton');
 const controlsButton = document.getElementById('showControlsButton');
 const rightGBUI = document.getElementById('rightGBUI')
 const linkButton = document.getElementById('linkButton');
+const settingsButton = document.getElementById('settingsButton');
 const soundButton = document.getElementById('soundButton');
-const gbAudio = document.getElementById('gbMusic');
 
 function displayUI() {
     backArrow.style.display = 'block';
@@ -783,6 +860,7 @@ function onGBButtonDrag(event) {
 
 /////////// EVENT LISTENERS //////////////
 let mouseDown = false;
+let soundPlaying = true;
 
 renderer.domElement.addEventListener("mousedown", (event) => {
   if (cameraOnGB && event.button === 0) {
@@ -859,22 +937,26 @@ backArrow.addEventListener('click', function() {
   }
 });
 
-controlsButton.addEventListener('click', function() {
-  popUp2.style.display = 'flex';
+settingsButton.addEventListener('click', function() {
+  settingsWrapper.style.display = 'flex';
 });
 
-soundButton.addEventListener('click', function() {
-  if (soundButton.src.endsWith('soundOff.svg')) {
-    soundButton.src = '/static/soundOn.svg';
-    gbAudio.volume = 0.75;
-  } else {
-    soundButton.src = '/static/soundOff.svg';
-    gbAudio.volume = 0;
-  }
+controlsButton.addEventListener('click', function() {
+  controlsWrapper.style.display = 'flex';
 });
 
 linkButton.addEventListener('click', function() {
   window.location.href = "https://dawsonweilage.com/portfolio";
+});
+
+soundButton.addEventListener('click', function () {
+  if (soundPlaying == false) {
+    soundButton.src = '/static/soundOn.svg'
+    soundPlaying = true;
+  } else {
+    soundButton.src = '/static/soundOff.svg'
+    soundPlaying = false;
+  }
 });
 
 
@@ -887,5 +969,5 @@ function animate() {
   //console.log(camera.position.x, camera.position.y, camera.position.z);
 };
 
-
 animate();
+

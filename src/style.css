@@ -5,6 +5,14 @@
   box-sizing: border-box;
 }
 
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
 iframe {
   pointer-events: none !important;
 
@@ -16,8 +24,18 @@ iframe.gameboy-screen {
   height: 144px;
   border: none; 
   touch-action: none;
-  border-radius: 7px;
-  filter:brightness(30%) sepia(100%) hue-rotate(32deg) saturate(700%) opacity(45%) blur(.55px);
+}
+
+.original-screen {
+  border: 2px solid rgba(20, 20, 20, 0.705) !important;
+  border-radius: 3px;
+  filter:brightness(35%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(30%) blur(.3px) contrast(1.15);
+}
+
+.ips-screen {
+  border: 2px solid rgba(20, 20, 20, 0.61) !important;
+  border-radius: 5px;
+  filter:brightness(80%) sepia(100%) hue-rotate(32deg) saturate(600%) opacity(70%) blur(0px) contrast(1.15);
 }
 
 iframe.pc-screen {
@@ -61,7 +79,7 @@ iframe.pc-screen {
 }
 
 .loader {
-  margin-top: 15px;
+  margin-top: 25px;
   width: 40px;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -71,8 +89,9 @@ iframe.pc-screen {
 }
 @keyframes l1 {to{transform: rotate(.5turn)}}
 
+
 /* POP-UP 1 */
-.popup1-wrapper, .popup2-wrapper {
+.popup1-wrapper, .controls-wrapper, .settings-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -88,7 +107,7 @@ iframe.pc-screen {
   touch-action: none;
 }
 
-.popup1-container, .popup2-container {
+.popup1-container, .controls-container, .settings-container {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-width: 400px;
   display: flex;
@@ -111,26 +130,26 @@ iframe.pc-screen {
 }
 
 @media only screen and (max-width: 600px) {
-  .popup1-container, .popup2-container{
+  .popup1-container, .controls-container, .settings-container{
     transform: translate(-50%, -60%);
     animation: 1s fadeInUpPhone;
     min-width: 325px;
   }
 }
 
-.popup1-container h1, .popup2-container h1 {
+.popup1-container h1, .controls-container h1, .settings-container h1 {
   font-size: 2.5rem;
 }
 
 .popup1-container p {
   font-size: 1rem;
   font-weight: 100;
-  max-width: 300px;
+  max-width: 250px;
 }
 
 .popup1-container img {
   width: 50px;
-  padding: 10px 0px 10px 0px;
+  padding: 10px 0px 0px 0px;
   filter: invert(1)
 }
 
@@ -153,12 +172,12 @@ iframe.pc-screen {
   color: white !important;
 }
 
-/* POP-UP 2 */
+/*  CONTROLS POP-UP  */
 .controls-headers {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 35px;
+  gap: 40px;
   margin-top: 10px;
 }
 
@@ -170,18 +189,21 @@ iframe.pc-screen {
   gap: 5px;
 }
 
-.controls-image {
-  filter: invert(1);
-  width: 25px;
-}
-
-.controls-headers button{
+.control-button {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border: none;
   background-color: transparent;
   font-size: 1.2rem;
   color: white;
   font-weight: 300;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.controls-image {
+  filter: invert(1);
+  width: 30px;
 }
 
 .controls-headers button:hover{
@@ -222,6 +244,73 @@ iframe.pc-screen {
   font-size: .9rem;
 }
 
+/*  SETTINGS POP-UP  */
+
+.settings-container {
+  min-height: 450px;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .settings-container {
+    max-width: 250px;
+  }
+}
+
+.setting-header {
+  font-weight: 200;
+  font-size: 1.3rem;
+}
+
+.setting {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+
+}
+
+.setting-options {
+  display: flex;
+  justify-content: center;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+
+}
+
+.setting-options p{
+  font-size: 1.5rem;
+  font-weight: 200;
+
+}
+
+.setting-options button {
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  color: white;
+  font-weight: 00;
+  min-width: 80px;
+  gap: 5px;
+}
+
+.setting-options button:hover {
+  cursor: pointer;
+  font-weight: 700 !important;
+}
+
+.setting-active {
+  font-weight: 800 !important;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-decoration-skip-ink: none;
+
+}
+
 #linkButton {
   font-family: 'Inter';
   justify-content: center;
@@ -241,7 +330,6 @@ iframe.pc-screen {
 }
 
 .right-gb-ui input {
-  color: rgb(116, 23, 23);
   cursor: pointer;
   border: none;
   background-color: transparent;
@@ -267,7 +355,7 @@ iframe.pc-screen {
 
 /* phone */
 @media only screen and (max-width: 600px) {
-  #backArrowButton, #soundButton, #showControlsButton, #linkButton {
+  #backArrowButton, #settingsButton, #soundButton, #showControlsButton, #linkButton {
     scale: .8;
   }
   #backArrowButton {
@@ -278,7 +366,7 @@ iframe.pc-screen {
   .right-gb-ui {
     top: 3%;
     right: 5%;
-    gap: 30px;
+    gap: 15px;
   }
 
    #linkButton {
@@ -289,7 +377,7 @@ iframe.pc-screen {
 }
 
 @media only screen and (min-width: 600px) {
-  #backArrowButton, #soundButton, #showControlsButton, #linkButton {
+  #backArrowButton, #settingsButton, #soundButton, #showControlsButton, #linkButton {
     scale: 1;
   }
   #backArrowButton {
@@ -311,7 +399,7 @@ iframe.pc-screen {
 }
 
 @media only screen and (min-width: 1200px) {
-  #backArrowButton, #soundButton, #showControlsButton, #linkButton {
+  #backArrowButton, #settingsButton, #soundButton, #showControlsButton, #linkButton {
     scale: 1.2;
   }
   #backArrowButton {

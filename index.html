@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home | Dawson Weilage</title>
-  <link rel="icon" type="image/x-icon" href="/website/static/light-theme-logo.svg">
+  <link rel="icon" type="image/x-icon" href="/static/black2-logo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
 </head>
 <body>
   <div class="progress-bar-container">
-      <label id="progress-bar-label" for="progress-bar" >Loading</label>
+      <label id="progress-bar-label" for="progress-bar">Loading</label>
       <span class="loader" id="loadingCircle"></span>
   </div>
 
@@ -22,24 +22,48 @@
       <p>Feel free to look around and learn more about me by clicking on the Game Boy or Computer:</p>
       <div>
         <img src="/static/gameboyIcon.png" alt="gameboyIcon">
-    
       </div>
       <button id="popup1-button" class="popup-button">continue</button>
     </div>
   </div>
 
-  <div class="popup2-wrapper" id="popup2-wrapper">
-    <div class="popup2-container">
+  <div class="settings-wrapper" id="settings-wrapper">
+    <div class="settings-container">
+      <h1>Settings</h1>
+      <div class="setting">
+        <h2 class="setting-header">Screen</h2>
+        <div class="setting-options">
+          <button id="originalScreenButton" class="setting-active">Original</button>
+          <p>/</p>
+          <button id="ipsScreenButton">IPS LCD</button>
+        </div>
+      </div>
+      <div class="setting">
+        <h2 class="setting-header">Lamp</h2>
+        <div class="setting-options">
+          <button id="dimLampButton">Dim</button>
+          <p>/</p>
+          <button id="normalLampButton" class="setting-active">Normal</button>
+          <p>/</p>
+          <button id="brightLampButton">Bright</button>
+        </div>
+      </div>
+      <button id="settings-exit-button" class="popup-button">Close</button>
+    </div>
+  </div>
+  
+
+
+  <div class="controls-wrapper" id="controls-wrapper">
+    <div class="controls-container">
       <h1>Controls</h1>
       <div class="controls-headers">
-        <div class="control-button-container">
-          <img src="/static/mobile.svg" class="controls-image">
-          <button class="mobile-button active" id="mobile-button">Mobile</button>
+        <div class="control-button-container mobile-button">
+          <button class="control-button flex column active" id="mobile-button"><img src="/static/mobile.svg" class="controls-image">Mobile</button>
         </div> 
         <h1 style="font-weight: 200;">/</h1>
         <div class="control-button-container">
-          <img src="/static/keyboard.svg" class="controls-image">
-          <button class="desktop-button" id="desktop-button">Desktop</button>
+          <button class="control-button flex column" id="desktop-button"><img src="/static/keyboard.svg" class="controls-image">Desktop</button>
         </div> 
       </div>
       <div class="mobile-controls-container" id="mobile-controls">
@@ -84,21 +108,18 @@
           </div>
         </div>
       </div>
-      <button id="popup2-button" class="popup-button">Got it!</button>
+      <button id="controls-exit-button" class="popup-button">Got it!</button>
     </div>
   </div>
-
-  <audio id="gbAudio">
-    <source src="horse.ogg" type="audio/ogg">
-  </audio> 
   <button class="ui-button" id="backArrowButton"><img src="/static/backArrow.svg"></button>
   <div class="right-gb-ui" id="rightGBUI">
     <input type="image" src="/static/showControls.svg" id="showControlsButton"></input>
-    <input type="image" src="/static/soundOff.svg" id="soundButton"></input>
+    <input type="image" src="/static/settings.svg" id="settingsButton"></input>
+    <input type="image" src="/static/soundOn.svg" id="soundButton"></input>
   </div>
   <button class="ui-button" id="linkButton">VISIT<img src="/static/link.svg"></button>
   <iframe src="./portfolio/monitor-index.html" id="pcScreen" class="pc-screen" hidden></iframe>
-  <iframe src="./game/index.html" id="gameboyScreen" class="gameboy-screen visible" hidden></iframe>
+  <iframe src="./game/index.html" id="gameboyScreen" class="gameboy-screen original-screen visible" hidden></iframe>
   <script type="module" src="/src/script.js"></script>
 </body>
 </html>
