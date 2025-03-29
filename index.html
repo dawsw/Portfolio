@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-  <script type="module" crossorigin src="/assets/index-CZb-hHcl.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BWzMFIyO.css">
+  <script type="module" crossorigin src="/assets/index-B1ZCXVvP.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BuvqSOpm.css">
 </head>
 <body>
   <div class="progress-bar-container">
@@ -28,8 +28,35 @@
     </div>
   </div>
 
-  <div class="popup2-wrapper" id="popup2-wrapper">
-    <div class="popup2-container">
+  <div class="settings-wrapper" id="settings-wrapper">
+    <div class="settings-container">
+      <h1>Settings</h1>
+      <div class="setting">
+        <h2 class="setting-header">Screen</h2>
+        <div class="setting-options">
+          <button id="originalScreenButton" class="setting-active">Original</button>
+          <p>/</p>
+          <button id="ipsScreenButton">IPS LCD</button>
+        </div>
+      </div>
+      <div class="setting">
+        <h2 class="setting-header">Lamp</h2>
+        <div class="setting-options">
+          <button id="dimLampButton">Dim</button>
+          <p>/</p>
+          <button id="normalLampButton" class="setting-active">Normal</button>
+          <p>/</p>
+          <button id="brightLampButton">Bright</button>
+        </div>
+      </div>
+      <button id="settings-exit-button" class="popup-button">Close</button>
+    </div>
+  </div>
+  
+
+
+  <div class="controls-wrapper" id="controls-wrapper">
+    <div class="controls-container">
       <h1>Controls</h1>
       <div class="controls-headers">
         <div class="control-button-container mobile-button">
@@ -82,16 +109,17 @@
           </div>
         </div>
       </div>
-      <button id="popup2-button" class="popup-button">Got it!</button>
+      <button id="controls-exit-button" class="popup-button">Got it!</button>
     </div>
   </div>
   <button class="ui-button" id="backArrowButton"><img src="/static/backArrow.svg"></button>
   <div class="right-gb-ui" id="rightGBUI">
     <input type="image" src="/static/showControls.svg" id="showControlsButton"></input>
+    <input type="image" src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20width='48'%20height='48'%20viewBox='0%200%2024%2024'%20fill='none'%20stroke='%23ffffff'%20stroke-width='2'%20stroke-linecap='round'%20stroke-linejoin='round'%20class='lucide%20lucide-settings-icon%20lucide-settings'%3e%3cpath%20d='M12.22%202h-.44a2%202%200%200%200-2%202v.18a2%202%200%200%201-1%201.73l-.43.25a2%202%200%200%201-2%200l-.15-.08a2%202%200%200%200-2.73.73l-.22.38a2%202%200%200%200%20.73%202.73l.15.1a2%202%200%200%201%201%201.72v.51a2%202%200%200%201-1%201.74l-.15.09a2%202%200%200%200-.73%202.73l.22.38a2%202%200%200%200%202.73.73l.15-.08a2%202%200%200%201%202%200l.43.25a2%202%200%200%201%201%201.73V20a2%202%200%200%200%202%202h.44a2%202%200%200%200%202-2v-.18a2%202%200%200%201%201-1.73l.43-.25a2%202%200%200%201%202%200l.15.08a2%202%200%200%200%202.73-.73l.22-.39a2%202%200%200%200-.73-2.73l-.15-.08a2%202%200%200%201-1-1.74v-.5a2%202%200%200%201%201-1.74l.15-.09a2%202%200%200%200%20.73-2.73l-.22-.38a2%202%200%200%200-2.73-.73l-.15.08a2%202%200%200%201-2%200l-.43-.25a2%202%200%200%201-1-1.73V4a2%202%200%200%200-2-2z'/%3e%3ccircle%20cx='12'%20cy='12'%20r='3'/%3e%3c/svg%3e" id="settingsButton"></input>
     <input type="image" src="/static/soundOn.svg" id="soundButton"></input>
   </div>
   <button class="ui-button" id="linkButton">VISIT<img src="/static/link.svg"></button>
   <iframe src="./portfolio/monitor-index.html" id="pcScreen" class="pc-screen" hidden></iframe>
-  <iframe src="./game/index.html" id="gameboyScreen" class="gameboy-screen visible" hidden></iframe>
+  <iframe src="./game/index.html" id="gameboyScreen" class="gameboy-screen original-screen visible" hidden></iframe>
 </body>
 </html>
