@@ -14,7 +14,6 @@ if (( window.innerWidth <= 550 ) && ( window.innerHeight <= 900 ) || ( window.in
   mobileUser = true;
 };
 
-
 /////////// LOADING MANAGER //////////////
 const loadingManager = new THREE.LoadingManager();
 const gltfLoader = new GLTFLoader(loadingManager);
@@ -31,10 +30,6 @@ loadingManager.onLoad = function () {
   //loadingCircle.style.display = 'none';
 
   gameboyScreenHTML.removeAttribute('hidden');
-  
-  if (mobileUser == false) {
-    pcScreenHTML.removeAttribute('hidden');
-  }
 
   window.setTimeout(() => {
     //show popup
@@ -115,10 +110,12 @@ originalScreenButton.addEventListener('click', function () {
 
   //make sure dim/bright filter is on depending on lamp brightness
   if (lampLight.intensity == 2) {
+     //dim screen
     gameboyScreenHTML.style.filter = 'brightness(10%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(25%) blur(.3px) contrast(1.15)';
   } 
   else if (lampLight.intensity == 35) {
-    gameboyScreenHTML.style.filter = 'brightness(45%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(40%) blur(.3px) contrast(1.25)';
+    //bright screen
+    gameboyScreenHTML.style.filter = 'brightness(40%) sepia(95%) hue-rotate(28deg) saturate(700%) opacity(30%) blur(.3px) contrast(1.4)';
   }
 });
 
@@ -153,7 +150,7 @@ normalLampButton.addEventListener('click', function () {
 
   //add original filter
   if (gameboyScreenHTML.classList.contains('original-screen')) {
-    gameboyScreenHTML.style.filter = 'brightness(35%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(30%) blur(.3px) contrast(1.15)';
+    gameboyScreenHTML.style.filter = 'brightness(30%) sepia(95%) hue-rotate(28deg) saturate(700%) opacity(25%) blur(.4px) contrast(1.25)';
   }
 });
 
@@ -164,9 +161,9 @@ brightLampButton.addEventListener('click', function () {
 
   lampLight.intensity = 35;
 
-  //add brighter filter
+  //add bright filter
   if (gameboyScreenHTML.classList.contains('original-screen')) {
-    gameboyScreenHTML.style.filter = 'brightness(45%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(40%) blur(.3px) contrast(1.25)';
+    gameboyScreenHTML.style.filter = 'brightness(40%) sepia(95%) hue-rotate(28deg) saturate(700%) opacity(30%) blur(.3px) contrast(1.4)';
   }
 });
 
@@ -187,15 +184,16 @@ const spawnZ = camera.position.z;
 //CSS3DRenderer
 const cssRenderer = new CSS3DRenderer();
 cssRenderer.setSize(w, h);
-cssRenderer.domElement.style.position = 'absolute';
+cssRenderer.domElement.style.position = 'fixed';
 document.body.appendChild(cssRenderer.domElement);
 
 
 //WebGLRenderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(w, h);
-if (mobileUser) renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+
 document.body.appendChild(renderer.domElement);
+
 
 //update camera/renderer sizes
 window.addEventListener("resize", () => {
@@ -279,6 +277,8 @@ gltfLoader.load(
 
 /////////// GAMEBOY MODEL //////////////
 let gameboyModel;
+const gameboyScreenHTML = document.getElementById('gameboyScreen');
+const gameboyScreenObject = new CSS3DObject(gameboyScreenHTML);
 
 gltfLoader.load(
   '/models/gameboy/scene.gltf',
@@ -288,8 +288,19 @@ gltfLoader.load(
     gameboyModel.rotation.y += 4.7;
     gameboyModel.position.set(0, -7, -4.25)
     gameboyModel.scale.set(8,8,8);
+
+    //if user is on phone, raise screen a bit higher (y)
+    if (mobileUser) {
+      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .47), (gameboyModel.position.z - 1.426));
+    } else {
+      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .304), (gameboyModel.position.z - 1.426));
+    }
     
+    gameboyScreenObject.rotateX(-1.5);
+    gameboyScreenObject.rotateY(-.01);
+    gameboyScreenObject.scale.set(0.00398, 0.00355, 0.0038);
     scene.add(gameboyModel);
+    scene.add(gameboyScreenObject);
   },
 );
 
@@ -367,55 +378,24 @@ const buttonKeyMap = new Map([
   [selectButton, "Shift"]
 ]);
 
+/////////// PC SCREEN //////////////
+const textureLoader = new THREE.TextureLoader();
+const imageTexture = textureLoader.load('./static/portfolioIMG.png');
 
-//GB screen
-const gameboyScreenHTML = document.getElementById('gameboyScreen');
-const gameboyScreenObject = new CSS3DObject(gameboyScreenHTML);
+imageTexture.colorSpace = THREE.SRGBColorSpace; 
 
-//if user is on phone, raise screen a bit higher (y)
-if (mobileUser) { 
-  gameboyScreenObject.position.set(-.002 , -6.54, -5.68);
-}
-else {
-  gameboyScreenObject.position.set(-.002, -6.7, -5.68);
-}
+imageTexture.minFilter = THREE.LinearFilter;
+imageTexture.magFilter = THREE.NearestFilter;
 
-gameboyScreenObject.rotateX(-1.5);
-gameboyScreenObject.rotateY(-.01);
-gameboyScreenObject.scale.set(0.004, 0.0036, 0.0038);
-scene.add(gameboyScreenObject);
+const planeGeometry = new THREE.PlaneGeometry(5, 3); // Adjust the size of the plane
+const planeMaterial = new THREE.MeshBasicMaterial({ map: imageTexture, side: THREE.DoubleSide }); // Applying the image texture
+const pcScreenIMG = new THREE.Mesh(planeGeometry, planeMaterial);
 
-
-
-/////////// PC SCREEN (WEBSITE) //////////////
-const pcScreenHTML = document.getElementById('pcScreen');
-
-if (mobileUser) {
-  const textureLoader = new THREE.TextureLoader();
-  const imageTexture = textureLoader.load('./static/portfolioIMG.png');
-
-  imageTexture.colorSpace = THREE.SRGBColorSpace; 
-
-  imageTexture.minFilter = THREE.LinearFilter;
-  imageTexture.magFilter = THREE.NearestFilter;
-
-  const planeGeometry = new THREE.PlaneGeometry(5, 3); // Adjust the size of the plane
-  const planeMaterial = new THREE.MeshBasicMaterial({ map: imageTexture, side: THREE.DoubleSide }); // Applying the image texture
-  const pcScreenIMG = new THREE.Mesh(planeGeometry, planeMaterial);
-
-  pcScreenIMG.rotateY(-.715);
-  pcScreenIMG.position.set(6.4, -4.37, -6.625);
-  pcScreenIMG.scale.x = 1.115;
-  pcScreenIMG.scale.y = 1.09;
-  scene.add(pcScreenIMG);
-
-} else {
-  const pcScreenObject = new CSS3DObject(pcScreenHTML); 
-  pcScreenObject.position.set(6.4, -4.37, -6.6);
-  pcScreenObject.rotateY(-.71);
-  pcScreenObject.scale.set(0.00291, 0.00302);
-  scene.add(pcScreenObject);
-}
+pcScreenIMG.rotateY(-.715);
+pcScreenIMG.position.set(6.4, -4.37, -6.625);
+pcScreenIMG.scale.x = 1.115;
+pcScreenIMG.scale.y = 1.09;
+scene.add(pcScreenIMG);
 
 cssRenderer.domElement.style.pointerEvents = 'none';
 
@@ -434,8 +414,12 @@ scene.add(screenSquare);
 
 /////////// FUNCTIONS //////////////
 
+
 //function to animate camera along the path to the GB
 let shownControls = false;
+
+//limit gsap refreshes to 60fps (60hz displays)
+gsap.ticker.fps(60);
 
 function zoomIntoGB() {
   let pathToGB;
@@ -448,7 +432,7 @@ function zoomIntoGB() {
   if (mobileUser) {
     pathToGB = new THREE.CatmullRomCurve3([
       new THREE.Vector3(camera.position.x, camera.position.y, camera.position.z), //camera's current position
-      new THREE.Vector3(0, -5.45, -5.15) //final position
+      new THREE.Vector3(0, -5.55, -5.15) //final position
     ]);
   } else {
     pathToGB = new THREE.CatmullRomCurve3([
@@ -459,7 +443,7 @@ function zoomIntoGB() {
 
   gsap.to((camera.position), {
     motionPath: {
-      path: pathToGB.getPoints(300),
+      path: pathToGB.getPoints(200),
       autoRotate: false,
       curviness: 2,
     },
@@ -495,6 +479,7 @@ function zoomOutOfGB() {
   let gbPathToSpawn;
   let cameraTargetY = -7.5;
 
+
   //allow full orbitControls
   removeCameraLimits();
   orbitControls.enableZoom = false;
@@ -507,7 +492,7 @@ function zoomOutOfGB() {
 
   gsap.to((camera.position), {
     motionPath: {
-      path: gbPathToSpawn.getPoints(250),
+      path: gbPathToSpawn.getPoints(200),
       autoRotate: false,
       curviness: 2,
     },
@@ -515,16 +500,12 @@ function zoomOutOfGB() {
     ease: "power2.out",
     onUpdate: () => {
       orbitControls.enableRotate = false;
-
-      if (mobileUser) {
-        cameraTargetY = cameraTargetY + 0.0625
-      } else {
-        cameraTargetY = cameraTargetY + 0.022
-      };
+      
+      cameraTargetY = cameraTargetY + 0.0625
 
       orbitControls.target.set(0, cameraTargetY, -5.4);
       orbitControls.update();
-      //console.log(orbitControls.target)
+      console.log(number, orbitControls.target)
     },
     onComplete: () => {
       setSpawnCameraLimits();
@@ -599,7 +580,7 @@ function zoomOutOfPC() {
  
   gsap.to((camera.position), {
     motionPath: {
-      path: pcPathToSpawn.getPoints(250),
+      path: pcPathToSpawn.getPoints(200),
       autoRotate: false,
       curviness: 2,
     },
@@ -608,14 +589,8 @@ function zoomOutOfPC() {
     onUpdate: () => {
       orbitControls.enableRotate = false;
 
-      if (mobileUser) {
-        cameraXTarget = cameraXTarget - 0.052
-        cameraYTarget = cameraYTarget + 0.037
-      } else {
-        cameraXTarget = cameraXTarget - 0.019
-        cameraYTarget = cameraYTarget + 0.01368
-  
-      };
+      cameraXTarget = cameraXTarget - 0.052
+      cameraYTarget = cameraYTarget + 0.037
       
       orbitControls.target.set(cameraXTarget, cameraYTarget, -6.5);
       orbitControls.update();
@@ -659,14 +634,18 @@ function onItemHover(event) {
   raycaster.setFromCamera(mouse, camera);
 
   var intersects = raycaster.intersectObjects(scene.children, true);
-  //console.log('0:' + intersects[0]['object']['name'], '1:' + intersects[1]['object']['name'], '2:' + intersects[2]['object']['name'])
+  //console.log('0:' + intersects[0]['object']['name'], '1:' + intersects[1]['object']['name'])
 
-  
-  if ((intersects[0]['object']['name'].includes("Gameboy") && cameraOnGB == false) || (intersects[0]['object']['name'].includes("Computer") && cameraOnPC == false)) {  
+  if (intersects.length > 0) {
+    if ((intersects[0]['object']['name'].includes("Gameboy") && cameraOnGB == false) || (intersects[1]['object']['name'].includes("Computer") && cameraOnPC == false)) {  
       document.body.style.cursor = "pointer";
     } else {
       document.body.style.cursor = "default";
     }
+  } else {
+    document.body.style.cursor = "default";
+  }
+
   };
 
 //move camera to GB if clicked
