@@ -8,27 +8,16 @@ import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer
 gsap.registerPlugin(MotionPathPlugin);
 
 /////////// SEE IF MOBILE USER //////////////
-let mobileUser = false;
-
-if (( window.innerWidth <= 550 ) && ( window.innerHeight <= 900 ) || ( window.innerWidth <= 900 ) && ( window.innerHeight <= 450 )) {
-  mobileUser = true;
-};
+let mobileUser = /Android|iPhone/i.test(navigator.userAgent);
 
 /////////// LOADING MANAGER //////////////
 const loadingManager = new THREE.LoadingManager();
 const gltfLoader = new GLTFLoader(loadingManager);
 
 const progressBarContainer = document.querySelector('.progress-bar-container');
-const progressBarLabel = document.getElementById('progress-bar-label');
-const loadingCircle = document.getElementById('loadingCircle');
-
 
 loadingManager.onLoad = function () {
   progressBarContainer.classList.add('hidden');
-
-  //progressBarLabel.style.display = 'none';
-  //loadingCircle.style.display = 'none';
-
   gameboyScreenHTML.removeAttribute('hidden');
 
   window.setTimeout(() => {
@@ -274,35 +263,37 @@ gltfLoader.load(
   },
 );
 
-
 /////////// GAMEBOY MODEL //////////////
 let gameboyModel;
 const gameboyScreenHTML = document.getElementById('gameboyScreen');
 const gameboyScreenObject = new CSS3DObject(gameboyScreenHTML);
 
 gltfLoader.load(
-  '/models/gameboy/scene.gltf',
+  '/models/gameboy/gameboy.glb',
   function (gltf) {
     gameboyModel = gltf.scene;
     gameboyModel.rotation.x += -1.5;
     gameboyModel.rotation.y += 4.7;
     gameboyModel.position.set(0, -7, -4.25)
     gameboyModel.scale.set(8,8,8);
-
-    //if user is on phone, raise screen a bit higher (y)
-    if (mobileUser) {
-      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .47), (gameboyModel.position.z - 1.426));
-    } else {
-      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .304), (gameboyModel.position.z - 1.426));
-    }
     
     gameboyScreenObject.rotateX(-1.5);
     gameboyScreenObject.rotateY(-.01);
     gameboyScreenObject.scale.set(0.00398, 0.00355, 0.0038);
+    gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .304), (gameboyModel.position.z - 1.426));
+    
+    console.log("Mobile User:", mobileUser)
+    console.log("User:", navigator.userAgent)
+    console.log("Viewport:", window.innerWidth, window.innerHeight);
+    console.log("Device Pixel Ratio:", window.devicePixelRatio);
+    console.log("GB Model:", gameboyModel.position);
+    console.log("GB Screen:", gameboyScreenObject.position);
+   
     scene.add(gameboyModel);
     scene.add(gameboyScreenObject);
   },
 );
+
 
 //GB power light
 const dotRadius = 0.1;
@@ -339,6 +330,8 @@ bButton.rotateX(-1.5);
 startButton.rotateZ(-1.5).rotateX(-.45);
 selectButton.rotateZ(-1.5).rotateX(-.45);
 
+
+//make buttons larger for mobile users
 if (mobileUser) {
   upButton.position.set(-.365, -6.8, -4.987);
   downButton.position.set(-.365, -6.8, -4.81);
@@ -505,7 +498,6 @@ function zoomOutOfGB() {
 
       orbitControls.target.set(0, cameraTargetY, -5.4);
       orbitControls.update();
-      console.log(number, orbitControls.target)
     },
     onComplete: () => {
       setSpawnCameraLimits();

@@ -28,15 +28,13 @@ iframe.gameboy-screen {
 }
 
 .original-screen {
-  border: 2px solid rgba(20, 20, 20, 0.705) !important;
-  border-radius: 3px;
-  filter:brightness(35%) sepia(100%) hue-rotate(28deg) saturate(700%) opacity(30%) blur(.3px) contrast(1.15);
+  border-radius: 5px;
+  filter:brightness(30%) sepia(95%) hue-rotate(28deg) saturate(700%) opacity(25%) blur(.4px) contrast(1.25);
 }
 
 .ips-screen {
-  border: 2px solid rgba(20, 20, 20, 0.61) !important;
-  border-radius: 5px;
-  filter:brightness(80%) sepia(100%) hue-rotate(32deg) saturate(600%) opacity(70%) blur(0px) contrast(1.15);
+  border-radius: 4px;
+  filter:brightness(55%) sepia(90%) hue-rotate(32deg) saturate(600%) opacity(45%) blur(.2px) contrast(1.15);
 }
 
 iframe.pc-screen {
@@ -132,8 +130,6 @@ iframe.pc-screen {
 
 @media only screen and (max-width: 600px) {
   .popup1-container, .controls-container, .settings-container{
-    transform: translate(-50%, -60%);
-    animation: 1s fadeInUpPhone;
     min-width: 325px;
   }
 }
@@ -142,10 +138,24 @@ iframe.pc-screen {
   font-size: 2.5rem;
 }
 
+@media only screen and (max-width: 600px) {
+  .controls-container h1, .settings-container h1 {
+    font-size: 2.25rem;
+  }
+}
+
 .popup1-container p {
   font-size: 1rem;
-  font-weight: 100;
+  font-weight: 150;
   max-width: 250px;
+}
+
+@media only screen and (max-width: 600px) {
+  .popup1-container p {
+    font-size: 1rem;
+    font-weight: 150;
+    max-width: 250px;
+  }
 }
 
 .popup1-container img {
