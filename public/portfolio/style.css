@@ -14,7 +14,7 @@ body {
 }
 
 .dark-theme {
-    background-color: rgb(12, 12, 12);
+    background-color: rgb(25, 25, 25);
     color: rgb(221, 221, 221);
 }
 
@@ -24,7 +24,7 @@ body {
 }
 
 .dark-theme-nav-footer {
-    background-color: rgb(10, 10, 10);
+    background-color: rgb(24, 24, 24);
     border-bottom: 2px solid rgb(8, 8, 8);
 }
 
@@ -43,8 +43,8 @@ body {
 }
 
 .light-theme {
-    background-color: rgb(245, 245, 245);
-    color: rgb(40, 40, 40);
+    background-color: rgb(240, 240, 240);
+    color: rgb(29, 29, 29);
 }
 
 .light-theme-icon {
@@ -53,7 +53,7 @@ body {
 }
 
 .light-theme-nav-footer {
-    background-color: rgb(245, 245, 245);
+    background-color: rgb(241, 241, 241);
     border-bottom: 2px solid rgb(40, 40, 40);
 }
 
@@ -358,7 +358,7 @@ main {
 
 @media only screen and (min-width: 1200px) {
     .about-header {
-        font-size: 6rem;
+        font-size: 5vw;
     }
 }
 
@@ -488,7 +488,7 @@ main {
 
 @media only screen and (min-width: 1200px) {
     .projects-header {
-        font-size: 6rem;
+        font-size: 5vw;
     }
 }
 
@@ -501,7 +501,7 @@ main {
 @media only screen and (min-width: 1200px) {
     .projects-container {
         flex-direction: row;
-        gap: 60px;
+        gap: 2vw; 
     }
 }
 
@@ -530,7 +530,7 @@ main {
 
 @media only screen and (min-width: 1200px) {
     .project {
-        width: 350px;
+        width: 20vw;
         max-height: 425px;
     }
 }
@@ -549,7 +549,7 @@ main {
 
 @media only screen and (min-width: 1200px) {
     .project h2 {
-        font-size: 1.5rem;
+        font-size: 1.5vw;
         font-weight: 500;
     }
 }
@@ -561,15 +561,15 @@ main {
 
 @media only screen and (min-width: 600px) {
     .project-image {
-        height: 200px;
+        max-height: 175px;
         width: 350px;
     }
 }
 
 @media only screen and (min-width: 1200px) {
     .project-image {
-        height: 200px;
-        width: 300px;
+        height: auto;
+        width: 15vw;
     }
 }
 
@@ -604,6 +604,18 @@ main {
     }
 }
 
+@media only screen and (min-width: 1200px) {
+    .project-button {
+        width: 8vw;
+        min-height: 50px;
+        font-size: 1rem;
+    }
+    
+    .project-button img {
+        width: 1.5vw;
+    }
+}
+
 
 /***** CONTACT SECTION *****/
 
@@ -618,7 +630,7 @@ main {
         padding: 50px;
         margin: 150px 0 150px 0;
         flex-direction: row;
-        gap: 150px;
+        gap: 5vw;                
     }
 }
 
@@ -637,7 +649,7 @@ main {
 
 @media only screen and (min-width: 1200px) {
     .contact-header {
-        font-size: 6rem;
+        font-size: 5vw;
     }
 }
 
