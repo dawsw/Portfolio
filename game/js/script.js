@@ -91,7 +91,7 @@ class VM {
     this.ticks = 0;
     this.extRamUpdated = false;
     this.paused_ = false;
-    this.volume = 0.05;
+    this.volume = 0.10;
     this.palIdx = DEFAULT_PALETTE_IDX;
     this.canvas = {
       show: true,
