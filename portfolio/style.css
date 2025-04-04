@@ -239,6 +239,7 @@ main {
     animation-fill-mode: forwards;
 	animation-duration: 1.5s;
     transition: color 0.4s ease;
+    will-change: opacity, transform;
 }
 
 @media only screen and (min-width: 600px) {
