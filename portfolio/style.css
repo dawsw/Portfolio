@@ -230,16 +230,8 @@ main {
 }
 
 #hi, #im{
-    opacity: 0;
     font-size: 3.5rem;
     font-weight: 600;
-    animation-name: fadeInMoveUp;
-    animation-iteration-count: 1;
-	animation-timing-function: ease;
-    animation-fill-mode: forwards;
-	animation-duration: 1.5s;
-    transition: color 0.4s ease;
-    will-change: opacity, transform;
 }
 
 @media only screen and (min-width: 600px) {
@@ -254,24 +246,10 @@ main {
     }
 }
 
-#hi {
-    animation-delay: .25s;
-}
-
-#im {
-    animation-delay: .75s;
-}
 
 #dawson {
-    opacity: 0;
     font-size: 4.25rem;
     font-weight: 700;
-    animation-name: fadeIn;
-    animation-iteration-count: 1;
-	animation-timing-function: ease;
-    animation-fill-mode: forwards;
-	animation-duration: 1.5s;
-    animation-delay: 1.25s;
 }
 
 @media only screen and (min-width: 600px) {
@@ -281,18 +259,11 @@ main {
 }
 
 .header-title {
-    opacity: 0;
     text-align: center;
     font-size: 1rem;
     font-weight: 200;
     line-height: 0px;
     word-spacing: 0px;
-    animation-name: fadeIn;
-    animation-iteration-count: 1;
-	animation-timing-function: ease;
-    animation-fill-mode: forwards;
-	animation-duration: 2s;
-    animation-delay: 2.25s;
 }
 
 @media only screen and (min-width: 600px) {
@@ -312,7 +283,7 @@ main {
     animation-iteration-count: 1;
 	animation-timing-function: ease-in-out;
     animation-duration: 1.5s;
-    animation-delay: 3.25s;
+    animation-delay: 1s;
     transition: filter 0.3s ease;
 }
 
@@ -327,6 +298,7 @@ main {
     justify-content: center;
     align-self: center;
 }
+
 /***** ABOUT SECTION *****/
 
 .about-section {
