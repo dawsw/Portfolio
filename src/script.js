@@ -8,7 +8,7 @@ import { CSS3DRenderer, CSS3DObject } from 'three/addons/renderers/CSS3DRenderer
 gsap.registerPlugin(MotionPathPlugin);
 
 /////////// SEE IF MOBILE USER //////////////
-let mobileUser = /Android|iPhone/i.test(navigator.userAgent);
+let mobileUser = /iPhone/i.test(navigator.userAgent);
 
 /////////// LOADING MANAGER //////////////
 const loadingManager = new THREE.LoadingManager();
@@ -172,8 +172,8 @@ const spawnZ = camera.position.z;
 
 //CSS3DRenderer
 const cssRenderer = new CSS3DRenderer();
-cssRenderer.setSize(w, h);
-cssRenderer.domElement.style.position = 'fixed';
+cssRenderer.setSize(window.innerWidth, window.innerHeight);
+cssRenderer.domElement.style.position = 'absolute';
 document.body.appendChild(cssRenderer.domElement);
 
 
@@ -188,14 +188,14 @@ document.body.appendChild(renderer.domElement);
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
   cssRenderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
 
 /////////// CAMERA //////////////
 const orbitControls = new OrbitControls(camera, renderer.domElement);
-orbitControls.rotateSpeed = '.25';
+orbitControls.rotateSpeed = '.15';
 orbitControls.enableDamping = true;
 orbitControls.dampingFactor = '0.07'
 orbitControls.enablePan = false;
@@ -203,24 +203,24 @@ orbitControls.enableZoom = false;
 
 
 //camera limits
-const angle30 = (30 * Math.PI) / 180; // Convert 30 degrees to radians
+const angle15 = (15 * Math.PI) / 180; // Convert 15 degrees to radians
 const angle60 = (60 * Math.PI) / 180;
 const centerAngle = Math.PI / 2; //default angle
 
 function setSpawnCameraLimits() {
-  orbitControls.minAzimuthAngle = -angle30; //30 left
-  orbitControls.maxAzimuthAngle = angle30; //30 right
+  orbitControls.minAzimuthAngle = -angle15; //15 left
+  orbitControls.maxAzimuthAngle = angle15; //15 right
 
-  orbitControls.minPolarAngle = centerAngle - angle30; //30 down
-  orbitControls.maxPolarAngle = centerAngle + angle30; //30 up
+  orbitControls.minPolarAngle = centerAngle - angle15; //15 down
+  orbitControls.maxPolarAngle = centerAngle + angle15; //15 up
 };
 
 function setPCCameraLimits() {
   orbitControls.minAzimuthAngle = -angle60; 
   orbitControls.maxAzimuthAngle = (-20 * Math.PI) / 180; 
 
-  orbitControls.minPolarAngle = centerAngle - angle30;
-  orbitControls.maxPolarAngle = centerAngle + ((15 * Math.PI) / 180); 
+  orbitControls.minPolarAngle = centerAngle - angle15;
+  orbitControls.maxPolarAngle = centerAngle + angle15; 
 };
 
 function removeCameraLimits() {
@@ -280,7 +280,12 @@ gltfLoader.load(
     gameboyScreenObject.rotateX(-1.5);
     gameboyScreenObject.rotateY(-.01);
     gameboyScreenObject.scale.set(0.00398, 0.00355, 0.0038);
-    gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .304), (gameboyModel.position.z - 1.426));
+
+    if (mobileUser) {
+      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .468), (gameboyModel.position.z - 1.426));
+    } else {
+      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .304), (gameboyModel.position.z - 1.426));
+    }
     
     console.log("Mobile User:", mobileUser)
     console.log("User:", navigator.userAgent)
