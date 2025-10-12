@@ -1,13 +1,12 @@
 {
   "homepage": "https://www.dawsonweilage.com",
-  "name": "package.json",
+  "name": "portfolio-3d",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "deploy": "gh-pages -d dist",
     "preview": "vite preview"
   },
   "devDependencies": {
