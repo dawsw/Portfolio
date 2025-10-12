@@ -252,7 +252,7 @@ scene.add(lampLight, roomLight)
 /////////// BEDROOM MODEL //////////////
 let bedroomModel;
 gltfLoader.load(
-  '/models/bedroom/bedroom.glb',
+  './models/bedroom/bedroom.glb',
 
   function (gltf) {
     bedroomModel = gltf.scene;
@@ -269,7 +269,7 @@ const gameboyScreenHTML = document.getElementById('gameboyScreen');
 const gameboyScreenObject = new CSS3DObject(gameboyScreenHTML);
 
 gltfLoader.load(
-  '/models/gameboy/gameboy.glb',
+  './models/gameboy/gameboy.glb',
   function (gltf) {
     gameboyModel = gltf.scene;
     gameboyModel.rotation.x += -1.5;
@@ -920,7 +920,7 @@ controlsButton.addEventListener('click', function() {
 });
 
 linkButton.addEventListener('click', function() {
-  window.location.href = "https://dawsonweilage.com/portfolio";
+  window.location.href = "https://dawsonweilage.com/";
 });
 
 soundButton.addEventListener('click', function () {
