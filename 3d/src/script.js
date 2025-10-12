@@ -1,8 +1,8 @@
 import * as THREE from './three';
 import { OrbitControls } from './three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
-import { gsap } from 'gsap';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { gsap } from './gsap';
+import { MotionPathPlugin } from './gsap/MotionPathPlugin';
 import { CSS3DRenderer, CSS3DObject } from './three/addons/renderers/CSS3DRenderer.js';
 
 gsap.registerPlugin(MotionPathPlugin);
