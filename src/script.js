@@ -280,20 +280,17 @@ gltfLoader.load(
     gameboyScreenObject.rotateX(-1.5);
     gameboyScreenObject.rotateY(-.01);
     gameboyScreenObject.scale.set(0.00398, 0.00355, 0.0038);
-
-    if (mobileUser) {
-      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .468), (gameboyModel.position.z - 1.426));
-    } else {
-      gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .304), (gameboyModel.position.z - 1.426));
-    }
+    gameboyScreenObject.position.set((gameboyModel.position.x -.0025), (gameboyModel.position.y + .304), (gameboyModel.position.z - 1.426));
     
+    /*
     console.log("Mobile User:", mobileUser)
     console.log("User:", navigator.userAgent)
     console.log("Viewport:", window.innerWidth, window.innerHeight);
     console.log("Device Pixel Ratio:", window.devicePixelRatio);
     console.log("GB Model:", gameboyModel.position);
     console.log("GB Screen:", gameboyScreenObject.position);
-   
+   */
+
     scene.add(gameboyModel);
     scene.add(gameboyScreenObject);
   },
@@ -942,7 +939,6 @@ function animate() {
   renderer.render(scene, camera);
   cssRenderer.render(scene, camera);
   orbitControls.update();
-
   //console.log(camera.position.x, camera.position.y, camera.position.z);
 };
 
