@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Home | Dawson Weilage</title>
+  <meta name="description" content="Aspiring software engineer and web developer with a passion for problem-solving. Check out my latest projects!">
+  <link rel="icon" type="image/x-icon" href="/static/black2-logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <div class="progress-bar-container">
+      <label id="progress-bar-label" for="progress-bar">Loading</label>
+      <span class="loader" id="loadingCircle"></span>
+  </div>
+
+  <div class="popup1-wrapper" id="popup1-wrapper">
+    <div class="popup1-container">
+      <h1>Welcome!</h1>
+      <p>Swipe/Drag to look around and learn more about me by clicking on the Game Boy or Computer:</p>
+      <div>
+        <img src="/static/gameboyIcon.png" alt="gameboyIcon">
+      </div>
+      <button id="popup1-button" class="popup-button">continue</button>
+    </div>
+  </div>
+
+  <div class="settings-wrapper" id="settings-wrapper">
+    <div class="settings-container">
+      <h1>Settings</h1>
+      <div class="setting">
+        <h2 class="setting-header">Screen</h2>
+        <div class="setting-options">
+          <button id="originalScreenButton" class="setting-active">Original</button>
+          <p>/</p>
+          <button id="ipsScreenButton">IPS LCD</button>
+        </div>
+      </div>
+      <div class="setting">
+        <h2 class="setting-header">Lamp</h2>
+        <div class="setting-options">
+          <button id="dimLampButton">Dim</button>
+          <p>/</p>
+          <button id="normalLampButton" class="setting-active">Normal</button>
+          <p>/</p>
+          <button id="brightLampButton">Bright</button>
+        </div>
+      </div>
+      <button id="settings-exit-button" class="popup-button">Close</button>
+    </div>
+  </div>
+  
+
+
+  <div class="controls-wrapper" id="controls-wrapper">
+    <div class="controls-container">
+      <h1>Controls</h1>
+      <div class="controls-headers">
+        <div class="control-button-container mobile-button">
+          <button class="control-button flex column active" id="mobile-button"><img src="/static/mobile.svg" class="controls-image">Mobile</button>
+        </div> 
+        <h1 style="font-weight: 200;">/</h1>
+        <div class="control-button-container">
+          <button class="control-button flex column" id="desktop-button"><img src="/static/keyboard.svg" class="controls-image">Desktop</button>
+        </div> 
+      </div>
+      <div class="mobile-controls-container" id="mobile-controls">
+        <div>
+          <div class="controls">
+            <div class="control-names">
+              <p>Move:</p>
+              <p>Interact:</p>
+              <p>Back:</p>
+              <p>Start:</p>
+              <p>Select:</p>
+              <p>Zoom In/Out:</p>
+            </div>
+            <div class="control-keys">
+              <p>D-Pad</p>
+              <p>A</p>
+              <p>B</p>
+              <p>Start</p>
+              <p>Select</p>
+              <p>Pinch</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="desktop-controls-container" id="desktop-controls" hidden>
+        <div class="controls">
+          <div class="control-names">
+            <p>Move:</p>
+            <p>Interact:</p>
+            <p>Back:</p>
+            <p>Start:</p>
+            <p>Select:</p>
+            <p>Zoom In/Out:</p>
+          </div>
+          <div class="control-keys">
+            <p>WASD</p>
+            <p>O</p>
+            <p>P</p>
+            <p>Enter</p>
+            <p>Shift</p>
+            <p>Scroll</p>
+          </div>
+        </div>
+      </div>
+      <button id="controls-exit-button" class="popup-button">Got it!</button>
+    </div>
+  </div>
+  <button class="ui-button" id="backArrowButton"><img src="/static/backArrow.svg"></button>
+  <div class="right-gb-ui" id="rightGBUI">
+    <input type="image" src="/static/showControls.svg" id="showControlsButton"></input>
+    <input type="image" src="/static/settings.svg" id="settingsButton"></input>
+    <input type="image" src="/static/soundOn.svg" id="soundButton"></input>
+  </div>
+  <button class="ui-button" id="linkButton">VISIT<img src="/static/link.svg"></button>
+  <iframe src="./game/index.html" id="gameboyScreen" class="gameboy-screen original-screen visible" hidden></iframe>
+  <script type="module" src="/src/script.js"></script>
+</body>
+</html>
