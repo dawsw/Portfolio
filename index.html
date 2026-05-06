@@ -14,8 +14,8 @@
             <a class="nav-logo dark-theme-icon" onclick="window.scrollTo({top: 0, behavior: 'smooth'});"><img src="./static/logo.svg" style="width: 45px;" id="logo"></a>
             <div class="nav-links">
                 <a onclick="window.scrollTo({top: 0, behavior: 'smooth'});">HOME</a>
-                <a onclick="window.scrollTo({top: 800, behavior: 'smooth'});">ABOUT ME</a>
-                <a onclick="window.scrollTo({top: 1620, behavior: 'smooth'});">PROJECTS</a>
+                <a onclick="window.scrollTo({top: 880, behavior: 'smooth'});">ABOUT ME</a>
+                <a onclick="window.scrollTo({top: 1760, behavior: 'smooth'});">PROJECTS</a>
                 <a onclick="window.scrollTo({top: 5000, behavior: 'smooth'});">CONTACT</a>
             </div>
             <div class="nav-right">
@@ -24,10 +24,10 @@
             </div>
         </nav>
         <div class="ham-links" id="hamLinks">
-            <a onclick="window.scrollTo({top: 0, behavior: 'smooth'});">HOME</a>
-            <a onclick="window.scrollTo({top: 660, behavior: 'smooth'});">ABOUT ME</a>
-            <a onclick="window.scrollTo({top: 1900, behavior: 'smooth'});">PROJECTS</a>
-            <a onclick="window.scrollTo({top: 5000, behavior: 'smooth'});">CONTACT</a>
+            <a onclick="window.scrollTo({top: 0, behavior: 'smooth'}); closeMenu();">HOME</a>
+            <a onclick="window.scrollTo({top: 800, behavior: 'smooth'}); closeMenu();">ABOUT ME</a>
+            <a onclick="window.scrollTo({top: 1800, behavior: 'smooth'}); closeMenu();">PROJECTS</a>
+            <a onclick="window.scrollTo({top: 5000, behavior: 'smooth'}); closeMenu();">CONTACT</a>
         </div>
     </div>
     <main>
@@ -105,41 +105,53 @@
                 </div> 
             </div>
         </div>
-        <div class="projects-section flex flex-centered">
-            <div class="projects-container flex">
+        <div class="projects-section ">
+            <div class="projects-wrapper flex flex-centered">
+                <div class="projects-container">
+                    <div class="project flex column dark-theme-background">
+                        <img class="project-image" src="./static/freeweights.png">
+                        <div class="project-info flex column">
+                            <h2>FREEWEIGHTS</h2>
+                            <p>A full-stack web app where users can track their fitness and nutrition, along with additional tools and data to support their goals.</p>
+                        </div>
+                        <div class="flex" style="gap: 15px;">
+                            <a href="https://freeweights.io/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
+                        </div>
+                    </div>
+                    <div class="project flex column dark-theme-background">
+                        <img class="project-image" src="./static/portfolioimage.png">
+                        <div class="project-info flex column">
+                            <h2>3D PORTFOLIO</h2>
+                            <p>An interactive, Gameboy-inspired 3D portfolio website featuring a custom-built game created in GB Studio.</p>
+                        </div>
+                        <div class="flex" style="gap: 15px;">
+                            <a href="https://dawsw.github.io/3D-Portfolio/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
+                            <a href="https://github.com/dawsw/3D-Portfolio" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project flex column dark-theme-background">
+                        <img class="project-image" src="./static/libprotempgen.png">
+                        <div class="project-info flex column">
+                            <h2>LIBRARY PROCESSING TEMPLATE GENERATOR</h2>
+                            <p>A tool that generates PDF templates for library processing tasks.</p>
+                        </div>
+                        <a href="https://github.com/dawsw/Library-Processing-Template-Generator" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
+                    </div>
+                    <div class="project flex column dark-theme-background">
+                        <img class="project-image" src="./static/listn.png">
+                        <div class="project-info flex column">
+                            <h2>LISTN - RATE YOUR FAVORITE MUSIC</h2>
+                            <p>A full-stack web application where users can rate, review, and explore music with a community.</p>
+                        </div>
+                        <a href="https://github.com/dawsw/LISTN" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
+                    </div>
+                </div>
                 <h1 class="projects-header dark-theme-background">PROJECTS</h1>
-                <div class="project flex column dark-theme-background">
-                    <img class="project-image" src="./static/portfolioimage.png">
-                    <div class="project-info flex">
-                        <h2>PERSONAL WEBSITE / 3D PORTFOLIO</h2>
-                        <p>An interactive, Gameboy-inspired 3D portfolio website featuring a custom-built game created in GB Studio.</p>
-                    </div>
-                    <div class="flex" style="gap: 15px;">
-                        <a href="https://dawsw.github.io/3D-Portfolio/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
-                        <a href="https://github.com/dawsw/3D-Portfolio" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" id="githubIcon">GitHub</a>
-                    </div>
-                </div>
-                <div class="project flex column dark-theme-background">
-                    <img class="project-image" src="./static/listn.png">
-                    <div class="project-info flex">
-                        <h2>LISTN - RATE YOUR FAVORITE MUSIC</h2>
-                        <p>A full-stack web application where users can rate, review, and explore music with a community.</p>
-                    </div>
-                    <a href="https://github.com/dawsw/LISTN" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" id="githubIcon">GitHub</a>
-                </div>
-                <div class="project flex column dark-theme-background">
-                     <img class="project-image" src="./static/libprotempgen.png">
-                     <div class="project-info flex">
-                        <h2>LIBRARY PROCESSING TEMPLATE GENERATOR</h2>
-                        <p>A tool that generates PDF templates for library processing tasks, improving efficiency and accuracy.</p>
-                    </div>
-                    <a href="https://github.com/dawsw/Library-Processing-Template-Generator" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" id="githubIcon">GitHub</a>
-                </div>
             </div>
         </div>
-        <div class="contact-section flex flex-centered">
+        <div class="contact-section flex ">
             <h1 class="contact-header dark-theme-background">CONTACT</h1>
-            <div class="contact-container flex flex-centered">
+            <div class="contact-container flex ">
                 <a href="mailto:dawsw124@gmail.com" class="link dark-theme-link">EMAIL</a>
                 <a href="https://linkedin.com/in/dawsonweilage" class="link dark-theme-link">LINKEDIN</a>
                 <a href="https://github.com/dawsw" class="link dark-theme-link">GITHUB</a>
@@ -147,7 +159,7 @@
         </div>
     </main>
     <footer class="flex column flex-centered dark-theme-nav-footer">
-        <p>© 2025 Dawson Weilage. All rights reserved.</p>
+        <p>© 2026 Dawson Weilage. All rights reserved.</p>
     </footer>
     <script src="script.js"></script>
 </body>

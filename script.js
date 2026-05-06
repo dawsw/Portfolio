@@ -1,3 +1,9 @@
+function closeMenu() {
+    const hamLinks = document.getElementById('hamLinks');
+    hamLinks.style.display = 'none'
+}
+
+
 let hamIcon = document.getElementById('hamIcon');
 let hamLinks = document.getElementById('hamLinks');
 

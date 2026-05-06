@@ -90,12 +90,12 @@ body {
 
 .navbar {
     top: 0;
-    position: sticky;
     display: block;
     overflow: hidden;
     z-index: 100;
     transition: background-color 0.4s ease;
 }
+
 
 nav {
     display: flex;
@@ -331,7 +331,7 @@ svg path {
 @media only screen and (min-width: 1200px) {
     .about-section {
         flex-direction: row;
-        gap: 100px;
+        justify-content: space-evenly;
     }
 }
 
@@ -432,60 +432,61 @@ svg path {
 }
 
 /***** PROJECTS SECTION *****/
-
 .projects-section {
-    margin: 75px 0 75px 0;
+    margin: 75px 0;
     flex-direction: column;
-   
 }
 
 @media only screen and (min-width: 1200px) {
     .projects-section {
-        margin: 150px 0 150px 0;
+        margin: 150px 0;
     }
 }
 
-.projects-container {
+/* Outer wrapper — column on mobile, row on desktop */
+.projects-wrapper {
+    display: flex;
     flex-direction: column;
-    gap: 60px;
     align-items: center;
+    gap: 30px;
 }
 
 @media only screen and (min-width: 1200px) {
-    .projects-container {
-        margin: 75px 0 75px 0;
-        flex-direction: row-reverse;
-        gap: 40px;
+    .projects-wrapper {
+        flex-direction: row;
+        align-items: center;
+        gap: 100px;
         justify-content: space-evenly;
     }
 }
 
-@media only screen and (max-width: 600px) {
-    .projects-header {
-        margin: 0;
-    }
-}
-
-@media only screen and (min-width: 600px) {
-    .projects-header {
-        margin: 0;
-    }
+/* Header */
+.projects-header {
+    order: -1;
+    margin: 0;
 }
 
 @media only screen and (min-width: 1200px) {
     .projects-header {
-        font-size: 4rem;
-       
+        order: 1;
     }
 }
 
-@media only screen and (min-width: 1600px) {
-    .projects-header {
-        font-size: 6rem;
-        margin-left: 60px;
+
+/* 2x2 grid sized to fit the fixed card width */
+.projects-container {
+    display: grid;
+    grid-template-columns: 310px 310px; /* matches card width */
+    gap: 50px 100px;
+}
+
+@media only screen and (max-width: 1199px) {
+    .projects-container {
+        grid-template-columns: 310px; /* single column on mobile */
     }
 }
 
+/* Cards — keep fixed width */
 .project {
     width: 310px;
     border: 1px solid;
@@ -493,15 +494,15 @@ svg path {
     transition: transform ease .3s;
     text-align: left;
     align-items: center;
-    padding-bottom: 20px;  
+    padding-bottom: 20px;
 }
 
 .project:hover {
-    transform: translate(0, -5px);
+    transform: translateY(-5px);
 }
 
 .project-info {
-    padding:  20px 20px 0 20px;
+    padding: 20px 20px 0 20px;
     min-height: 180px;
     flex-direction: column;
 }
@@ -509,20 +510,14 @@ svg path {
 .project-info h2 {
     margin: 0;
     font-weight: 600;
+    font-size: 22px;
     letter-spacing: -1px;
     text-align: left;
 }
 
-@media only screen and (min-width: 1200px) {
-    .project-info h2 {
-        font-size: 1.5rem;
-    }
-}
-
 .project-info p {
     font-weight: 300;
-    font-size: .9rem;
-    
+    font-size: 14px;
 }
 
 .project-image {
@@ -537,12 +532,11 @@ svg path {
     width: 110px;
     gap: 8px;
     border: 1px solid;
-    border-radius: 10px;
-    padding: 10px; 
+    border-radius: 5px;
+    padding: 10px;
     text-decoration: none;
     font-size: .9rem;
     font-weight: 500;
-    
 }
 
 .project-button:hover {
@@ -555,20 +549,22 @@ svg path {
 
 
 
-
 /***** CONTACT SECTION *****/
 
 .contact-section {
     margin: 0px 0 50px 0;
     flex-direction: column;
     padding: 25px;
+    justify-content: center;
+    align-items: center;
 }
 
 @media only screen and (min-width: 1200px) {
     .contact-section {
         margin: 200px 0 150px 0;
         flex-direction: row;
-        gap: 100px;                
+        justify-content: space-evenly;
+        align-items: center;                
     }
 }
 
@@ -576,12 +572,13 @@ svg path {
 .contact-container {
     margin-top: 20px;
     flex-direction: column;
-    gap: 40px;
+    gap: 50px;
 }
 
 @media only screen and (min-width: 1200px) {
     .contact-container {
         border-left: 1px solid;
+        gap: 100px;
     }
 }
 
@@ -606,6 +603,8 @@ svg path {
 
 @media only screen and (min-width: 1200px) {
     .contact-container a {
+        font-size: 4rem;
+        font-weight: 300;
         min-width: 300px;
         text-align: left;
         margin-left: 30px;
