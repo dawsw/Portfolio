@@ -6,6 +6,10 @@
     <title>Portfolio | Dawson Weilage </title>
     <link rel="icon" type="image/x-icon" href="./static/black2-logo.svg">
     <link rel="stylesheet" href="./style.css">
+    <script>
+        // Set before first paint so the about-section reveal has no flash of visible content
+        if ('IntersectionObserver' in window) document.documentElement.classList.add('js-anim');
+    </script>
     <script src="https://kit.fontawesome.com/883e1f4e4d.js" crossorigin="anonymous"></script>
 </head>
 <body class="dark-theme">
@@ -48,8 +52,8 @@
             <h1 class="about-header dark-theme-background">ABOUT ME</h1>
             <div class="about-info-container flex column flex-centered">
                 <div class="about-text">
-                    <p>Hello! My name is <b>Dawson Weilage</b> and I am an aspiring <b>Software Engineer/Web Developer</b>. Currently, I am a senior in college with a major in <b>Computer Science</b>. I enjoy learning about new technologies and solving real-world problems.</p>
-                    <p style="margin-top: 30px;"> Whether it's <b>front-end design</b>, <b>back-end logic</b>, or <b>full-stack development</b>, I am always eager to explore new tools and frameworks. I thrive in <b>collaborative</b> environments where I can share ideas, learn from others, and contribute to meaningful solutions. Here are some of the various technologies I've used: </p>
+                    <p>Hello! My name is <b>Dawson Weilage</b> and I am a <b>Software Engineer/Web Developer</b>. I recently have been spending most of my time creating new projects and improving my development skills. I enjoy learning about new technologies and solving real-world problems.</p>
+                    <p style="margin-top: 30px;"> Whether it's <b>front-end design</b>, <b>back-end logic</b>, or <b>full-stack development</b>, I am always eager to explore new tools and frameworks. I thrive in <b>collaborative</b> environments where I can share ideas, learn from others, and contribute to meaningful solutions. Here are just some of the various technologies I've used: </p>
                 </div>
                 <div class="flex column flex-centered">
                     <div class="about-technology-icons flex flex-centered">
@@ -108,42 +112,56 @@
         <div class="projects-section ">
             <div class="projects-wrapper flex flex-centered">
                 <div class="projects-container">
-                    <div class="project flex column dark-theme-background">
+                    <div class="project flex dark-theme-background">
+                        <img class="project-image" src="./static/myso.png">
+                        <div class="project-info flex column">
+                            <h2>MYSO</h2>
+                            <p>An iOS app for couples that gives them one shared space for daily photos, games, letters, and a joint calendar.</p>
+                            <div class="project-buttons flex">
+                                <a href="https://getmyso.com/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project flex dark-theme-background">
                         <img class="project-image" src="./static/freeweights.png">
                         <div class="project-info flex column">
                             <h2>FREEWEIGHTS</h2>
                             <p>A full-stack web app where users can track their fitness and nutrition, along with additional tools and data to support their goals.</p>
-                        </div>
-                        <div class="flex" style="gap: 15px;">
-                            <a href="https://freeweights.io/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
+                            <div class="project-buttons flex">
+                                <a href="https://freeweights.io/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="project flex column dark-theme-background">
+                    <div class="project flex dark-theme-background">
                         <img class="project-image" src="./static/portfolioimage.png">
                         <div class="project-info flex column">
                             <h2>3D PORTFOLIO</h2>
                             <p>An interactive, Gameboy-inspired 3D portfolio website featuring a custom-built game created in GB Studio.</p>
-                        </div>
-                        <div class="flex" style="gap: 15px;">
-                            <a href="https://dawsw.github.io/3D-Portfolio/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
-                            <a href="https://github.com/dawsw/3D-Portfolio" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
+                            <div class="project-buttons flex">
+                                <a href="https://dawsw.github.io/3D-Portfolio/" class="project-button flex flex-centered link dark-theme-link"><img src="./static/go-to-icon.svg">Visit</a>
+                                <a href="https://github.com/dawsw/3D-Portfolio" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
+                            </div>
                         </div>
                     </div>
-                    <div class="project flex column dark-theme-background">
+                    <div class="project flex dark-theme-background">
                         <img class="project-image" src="./static/libprotempgen.png">
                         <div class="project-info flex column">
                             <h2>LIBRARY PROCESSING TEMPLATE GENERATOR</h2>
                             <p>A tool that generates PDF templates for library processing tasks.</p>
+                            <div class="project-buttons flex">
+                                <a href="https://github.com/dawsw/Library-Processing-Template-Generator" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
+                            </div>
                         </div>
-                        <a href="https://github.com/dawsw/Library-Processing-Template-Generator" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
                     </div>
-                    <div class="project flex column dark-theme-background">
+                    <div class="project flex dark-theme-background">
                         <img class="project-image" src="./static/listn.png">
                         <div class="project-info flex column">
-                            <h2>LISTN - RATE YOUR FAVORITE MUSIC</h2>
+                            <h2>LISTN</h2>
                             <p>A full-stack web application where users can rate, review, and explore music with a community.</p>
+                            <div class="project-buttons flex">
+                                <a href="https://github.com/dawsw/LISTN" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
+                            </div>
                         </div>
-                        <a href="https://github.com/dawsw/LISTN" class="project-button flex flex-centered link dark-theme-link"><img src="./icons/github.svg" class="github-icon">GitHub</a>
                     </div>
                 </div>
                 <h1 class="projects-header dark-theme-background">PROJECTS</h1>
@@ -161,6 +179,15 @@
     <footer class="flex column flex-centered dark-theme-nav-footer">
         <p>© 2026 Dawson Weilage. All rights reserved.</p>
     </footer>
+
+    <!-- Desktop project lightbox. The card itself is cloned in by script.js, so
+         new projects need no extra markup here. -->
+    <div class="project-overlay flex flex-centered" id="projectOverlay" hidden>
+        <button class="project-modal-close" id="projectModalClose" type="button" aria-label="Back to projects"></button>
+        <div class="project-modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

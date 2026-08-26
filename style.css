@@ -6,22 +6,62 @@
     font-family:'Inter', Tahoma, Geneva, Verdana, sans-serif;
   }
 
+/* Registering these as <color> makes them interpolatable, so the page's grid
+   gradient and the signature fill can transition instead of snapping. */
+@property --grid-line {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #161616;
+}
+
+@property --grid-bg {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #101010;
+}
+
+@property --signature-fill {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #fff;
+}
+
+:root {
+    /* One duration/easing for every theme-swapped property on the page */
+    --theme-dur: 0.4s;
+    --theme-ease: ease;
+    --theme-transition:
+        background-color var(--theme-dur) var(--theme-ease),
+        border-color var(--theme-dur) var(--theme-ease),
+        color var(--theme-dur) var(--theme-ease),
+        fill var(--theme-dur) var(--theme-ease),
+        filter var(--theme-dur) var(--theme-ease);
+
+    transition: --signature-fill var(--theme-dur) var(--theme-ease);
+}
+
 body {
     margin: 0;
     font-family:'Inter', Tahoma, Geneva, Verdana, sans-serif;
-    transition: background-color 0.4s ease, color 0.4s ease;
+    background-color: var(--grid-bg);
+    background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+                      linear-gradient(to right, var(--grid-line) 1px, var(--grid-bg) 1px);
+    background-size: 20px 20px;
+    transition: var(--theme-transition),
+                --grid-line var(--theme-dur) var(--theme-ease),
+                --grid-bg var(--theme-dur) var(--theme-ease);
 }
 
 .dark-theme {
     color: rgb(255, 255, 255);
     opacity: 1;
-    background-image:  linear-gradient(#161616 1px, transparent 1px), linear-gradient(to right, #161616 1px, #101010 1px);
-    background-size: 20px 20px;
+    --grid-line: #161616;
+    --grid-bg: #101010;
 }
 
 .dark-theme-icon {
     filter: invert(0);
-    transition: filter 0.4s ease;
+    transition: var(--theme-transition);
 }
 
 .dark-theme-nav-footer {
@@ -42,16 +82,15 @@ body {
 }
 
 .light-theme {
-    background-color: rgba(240,240,240);
     opacity: 1;
-    background-image:  linear-gradient(#e4e4e4 1px, transparent 1px), linear-gradient(to right, #e4e4e4 1px, rgba(240,240,240,1) 1px);
-    background-size: 20px 20px;
+    --grid-line: #e4e4e4;
+    --grid-bg: rgb(240,240,240);
     color: #141414;
 }
 
 .light-theme-icon {
     filter: invert(.9);
-    transition: filter 0.4s ease;
+    transition: var(--theme-transition);
 }
 
 .light-theme-nav-footer {
@@ -69,6 +108,28 @@ body {
 
 .light-theme-background {
     background-color: rgba(240,240,240,1);
+}
+
+/* Every element the theme switcher restyles shares one duration/easing.
+   Rules further down that need their own transition (hover transforms, the
+   about-section reveal) append var(--theme-transition) to keep this timing. */
+.navbar,
+footer,
+.self-img,
+.header-title,
+.about-header,
+.projects-header,
+.contact-header,
+.link,
+.dark-theme-background,
+.light-theme-background,
+.dark-theme-nav-footer,
+.light-theme-nav-footer,
+.dark-theme-header-title,
+.light-theme-header-title,
+.dark-theme-self-img,
+.light-theme-self-img {
+    transition: var(--theme-transition);
 }
 
 .flex {
@@ -93,7 +154,7 @@ body {
     display: block;
     overflow: hidden;
     z-index: 100;
-    transition: background-color 0.4s ease;
+    transition: var(--theme-transition);
 }
 
 
@@ -291,7 +352,7 @@ svg path {
 	animation-timing-function: ease-in-out;
     animation-duration: 1.5s;
     animation-delay: 2.5s;
-    transition: filter 0.3s ease;
+    transition: var(--theme-transition);
     cursor: pointer;
 }
 
@@ -398,7 +459,7 @@ svg path {
     width: 75px;
     min-height: 110px;
     border-radius: 10px;
-    transition: transform ease .3s;
+    transition: transform ease .3s, var(--theme-transition);
     text-align: center;
 }
 
@@ -428,6 +489,176 @@ svg path {
     
     .about-icon h5{
         font-size: 1rem;
+    }
+}
+
+/***** SECTION REVEAL ANIMATIONS *****/
+
+/* Keyframes rather than transitions so these elements keep `transition` free
+   for the theme switcher's shared fade.
+   Every reveal uses fill-mode `backwards`: the from-state holds during the
+   delay, then the animation stops applying entirely once it finishes, which
+   leaves hover transforms on cards and contact links working normally.
+   .js-anim is set in index.html's head so sections stay visible without JS. */
+@keyframes revealRise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes revealFromRight {
+    from { opacity: 0; transform: translateX(80px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes revealFromLeft {
+    from { opacity: 0; transform: translateX(-80px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes revealDivider {
+    from { border-left-color: transparent; }
+    to   { border-left-color: currentColor; }
+}
+
+/* Resting (pre-reveal) state */
+.js-anim .about-header,
+.js-anim .about-text,
+.js-anim .about-technology-icons,
+.js-anim .projects-header,
+.js-anim .project,
+.js-anim .contact-header,
+.js-anim .contact-container a {
+    opacity: 0;
+}
+
+/* --- ABOUT --------------------------------------------------------------
+   Mobile/tablet: header, text, then icons fade up. There is no divider below
+   1200px, so the stagger closes up to fill that beat. */
+.js-anim .about-section.in-view .about-header,
+.js-anim .about-section.in-view .about-text,
+.js-anim .about-section.in-view .about-technology-icons {
+    opacity: 1;
+    animation: revealRise .7s ease backwards;
+}
+
+.js-anim .about-section.in-view .about-text {
+    animation-delay: .45s;
+}
+
+.js-anim .about-section.in-view .about-technology-icons {
+    animation-delay: .85s;
+}
+
+/* --- PROJECTS -----------------------------------------------------------
+   Header, then the cards stagger in one after another. */
+.js-anim .projects-section.in-view .projects-header {
+    opacity: 1;
+    animation: revealRise .7s ease backwards;
+}
+
+.js-anim .projects-section.in-view .project {
+    opacity: 1;
+    animation: revealRise .7s ease backwards;
+    animation-delay: calc(var(--reveal-start) + var(--reveal-index) * .12s);
+}
+
+.js-anim .project {
+    --reveal-start: .4s;
+}
+
+.js-anim .project:nth-child(1) { --reveal-index: 0; }
+.js-anim .project:nth-child(2) { --reveal-index: 1; }
+.js-anim .project:nth-child(3) { --reveal-index: 2; }
+.js-anim .project:nth-child(4) { --reveal-index: 3; }
+.js-anim .project:nth-child(5) { --reveal-index: 4; }
+.js-anim .project:nth-child(6) { --reveal-index: 5; }
+.js-anim .project:nth-child(n + 7) { --reveal-index: 6; } /* cap the stagger */
+
+/* --- CONTACT ------------------------------------------------------------
+   Header, then the links stagger in. Divider is desktop-only, see below. */
+.js-anim .contact-section.in-view .contact-header {
+    opacity: 1;
+    animation: revealRise .7s ease backwards;
+}
+
+.js-anim .contact-section.in-view .contact-container a {
+    opacity: 1;
+    animation: revealRise .7s ease backwards;
+    animation-delay: calc(var(--reveal-start) + var(--reveal-index) * .12s);
+}
+
+.js-anim .contact-container a {
+    --reveal-start: .45s;
+}
+
+.js-anim .contact-container a:nth-child(1) { --reveal-index: 0; }
+.js-anim .contact-container a:nth-child(2) { --reveal-index: 1; }
+.js-anim .contact-container a:nth-child(3) { --reveal-index: 2; }
+
+/* --- DESKTOP ------------------------------------------------------------
+   Headers slide in horizontally toward their column, the dividers fade in
+   after them, and the following steps wait for the divider. */
+@media only screen and (min-width: 1200px) {
+    .js-anim .about-info-container,
+    .js-anim .contact-container {
+        border-left-color: transparent;
+    }
+
+    .js-anim .about-section.in-view .about-header {
+        animation-name: revealFromRight;
+    }
+
+    .js-anim .about-section.in-view .about-info-container {
+        border-left-color: currentColor;
+        animation: revealDivider .6s ease .55s backwards;
+    }
+
+    .js-anim .about-section.in-view .about-text {
+        animation-delay: .95s;
+    }
+
+    .js-anim .about-section.in-view .about-technology-icons {
+        animation-delay: 1.35s;
+    }
+
+    /* The projects header sits on the right (order: 1), so it travels the
+       opposite way from the about/contact headers. */
+    .js-anim .projects-section.in-view .projects-header {
+        animation-name: revealFromLeft;
+    }
+
+    .js-anim .project {
+        --reveal-start: .5s;
+    }
+
+    .js-anim .contact-section.in-view .contact-header {
+        animation-name: revealFromRight;
+    }
+
+    .js-anim .contact-section.in-view .contact-container {
+        border-left-color: currentColor;
+        animation: revealDivider .6s ease .55s backwards;
+    }
+
+    .js-anim .contact-container a {
+        --reveal-start: .95s;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-anim .about-header,
+    .js-anim .about-text,
+    .js-anim .about-technology-icons,
+    .js-anim .about-info-container,
+    .js-anim .projects-header,
+    .js-anim .project,
+    .js-anim .contact-header,
+    .js-anim .contact-container,
+    .js-anim .contact-container a {
+        opacity: 1;
+        transform: none;
+        border-left-color: currentColor;
+        animation: none;
     }
 }
 
@@ -473,69 +704,178 @@ svg path {
 }
 
 
-/* 2x2 grid sized to fit the fixed card width */
+/* Single column at every width. On desktop the cards turn into wide rows, so
+   the list takes the same 720px footprint the old 2x2 grid did and stays
+   orphan-free no matter how many projects there are. */
 .projects-container {
     display: grid;
-    grid-template-columns: 310px 310px; /* matches card width */
-    gap: 50px 100px;
+    grid-template-columns: 280px; /* matches the stacked card width */
+    gap: 30px;
 }
 
-@media only screen and (max-width: 1199px) {
+@media only screen and (min-width: 1200px) {
     .projects-container {
-        grid-template-columns: 310px; /* single column on mobile */
+        grid-template-columns: 600px;
+        gap: 24px;
     }
 }
 
-/* Cards — keep fixed width */
+/* Cards — stacked (image on top) below 1200px, row (image on left) above */
 .project {
-    width: 310px;
+    position: relative;
+    overflow: hidden;
+    width: 280px;
+    flex-direction: column;
     border: 1px solid;
     border-radius: 10px;
-    transition: transform ease .3s;
+    transition: transform ease .3s, var(--theme-transition);
     text-align: left;
     align-items: center;
-    padding-bottom: 20px;
+    padding-bottom: 16px;
+}
+
+@media only screen and (min-width: 1200px) {
+    .project {
+        width: 600px;
+        flex-direction: row;
+        align-items: stretch;
+        min-height: 150px;
+        padding-bottom: 0;
+    }
 }
 
 .project:hover {
     transform: translateY(-5px);
 }
 
+/* A heavily blurred copy of the card's own screenshot, spanning the whole card
+   so the image's colour carries on behind the text. script.js sets
+   --project-image per card from its <img src>. Scaled up so the blur's soft
+   edges fall outside the card instead of vignetting at the borders. */
+.project::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: var(--project-image);
+    background-size: cover;
+    background-position: center;
+    filter: blur(30px) saturate(1.6);
+    transform: scale(1.25);
+    pointer-events: none;
+}
+
+.dark-theme .project::before {
+    opacity: .3;
+}
+
+.light-theme .project::before {
+    opacity: .22;
+}
+
 .project-info {
-    padding: 20px 20px 0 20px;
-    min-height: 180px;
+    /* No min-height: cards hug their text instead of padding out to a fixed
+       block, which is what was leaving dead space under short blurbs.
+       position/z-index keep the text above the blurred colour wash. */
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    padding: 16px 16px 0 16px;
     flex-direction: column;
+}
+
+@media only screen and (min-width: 1200px) {
+    .project-info {
+        flex: 1;
+        /* Clears the absolutely positioned image in the row layout */
+        margin-left: 46%;
+        padding: 16px 18px;
+    }
+}
+
+.project-buttons {
+    gap: 15px;
+    margin-top: auto; /* pin the buttons to the bottom of the card */
+    align-self: center;
+}
+
+@media only screen and (min-width: 1200px) {
+    .project-buttons {
+        align-self: flex-start;
+    }
 }
 
 .project-info h2 {
     margin: 0;
     font-weight: 600;
-    font-size: 22px;
+    font-size: 18px;
     letter-spacing: -1px;
     text-align: left;
 }
 
 .project-info p {
     font-weight: 300;
-    font-size: 14px;
+    font-size: 13px;
+    line-height: 1.45;
+    /* Tighter than the browser default 1em top/bottom, which was most of the
+       dead space between the title, blurb and buttons */
+    margin: 6px 0 12px 0;
+    opacity: 70%;
 }
 
 .project-image {
+    position: relative;
+    z-index: 1;
+    /* 278x133 matches the screenshots' ~2.09:1 ratio, so nothing is cropped */
+    width: 278px;
+    height: 133px;
     border-radius: 10px 10px 0 0;
     border-bottom: 1px solid rgb(31, 31, 31);
-    height: 150px;
-    width: 308px;
+    object-fit: cover;
+    object-position: center;
+}
+
+@media only screen and (min-width: 1200px) {
+    .project-image {
+        /* Absolute so it can fill the full card height and dissolve toward the
+           text instead of ending at a hard divider */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 46%;
+        height: 100%;
+        border: none;
+        border-radius: 10px 0 0 10px;
+        /* Fully transparent by its right edge, which is exactly where the text
+           column starts, so nothing is read over a ghost of the screenshot. The
+           extra stops ease the falloff — a plain two-stop ramp reads as a hard
+           edge. */
+        -webkit-mask-image: linear-gradient(to right,
+            #000 0%,
+            rgba(0, 0, 0, .92) 20%,
+            rgba(0, 0, 0, .72) 40%,
+            rgba(0, 0, 0, .45) 60%,
+            rgba(0, 0, 0, .18) 80%,
+            transparent 100%);
+        mask-image: linear-gradient(to right,
+            #000 0%,
+            rgba(0, 0, 0, .92) 20%,
+            rgba(0, 0, 0, .72) 40%,
+            rgba(0, 0, 0, .45) 60%,
+            rgba(0, 0, 0, .18) 80%,
+            transparent 100%);
+    }
 }
 
 .project-button {
-    height: 40px;
-    width: 110px;
+    height: 34px;
+    width: 100px;
     gap: 8px;
     border: 1px solid;
     border-radius: 5px;
-    padding: 10px;
+    padding: 8px;
     text-decoration: none;
-    font-size: .9rem;
+    font-size: .8rem;
     font-weight: 500;
 }
 
@@ -544,7 +884,161 @@ svg path {
 }
 
 .project-button img {
+    width: 16px;
+}
+
+@media only screen and (min-width: 1200px) {
+    /* Cards open the lightbox on desktop only */
+    .project {
+        cursor: pointer;
+    }
+}
+
+/***** PROJECT LIGHTBOX (desktop only) *****/
+
+.project-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    padding: 40px 20px;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, .45);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity .25s ease;
+}
+
+.light-theme .project-overlay {
+    background-color: rgba(120, 120, 120, .35);
+}
+
+.project-overlay[hidden] {
+    display: none;
+}
+
+.project-overlay.open {
+    opacity: 1;
+}
+
+/* Never available below 1200px, even if a stale `open` class survives a resize */
+@media only screen and (max-width: 1199px) {
+    .project-overlay {
+        display: none !important;
+    }
+}
+
+.project-modal {
+    position: relative;
+    margin: auto;
+    transform: scale(.96);
+    transition: transform .25s ease;
+}
+
+.project-overlay.open .project-modal {
+    transform: scale(1);
+}
+
+/* Floats in the viewport's top-left corner, above the card */
+.project-modal-close {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    cursor: pointer;
+    transition: transform ease .2s;
+}
+
+.project-modal-close:hover {
+    transform: translateX(-5px);
+}
+
+/* arrow-left.svg is authored with stroke="currentColor", which an <img> can't
+   resolve, so it's used as a mask and painted with the inherited text color.
+   That way it themes (and transitions) along with everything else. */
+.project-modal-close::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: currentColor;
+    -webkit-mask: url('./static/arrow-left.svg') center / contain no-repeat;
+    mask: url('./static/arrow-left.svg') center / contain no-repeat;
+    transition: var(--theme-transition);
+}
+
+/* The cloned card, forced back into the vertical (image-on-top) style */
+.project-modal .project {
+    width: 460px;
+    flex-direction: column;
+    align-items: stretch;
+    min-height: 0;
+    padding-bottom: 24px;
+    cursor: default;
+    /* Cancel the scroll-reveal resting state and the row card's hover lift */
+    opacity: 1;
+    animation: none;
+    transform: none;
+}
+
+.project-modal .project-image {
+    /* Back into normal flow: full natural width, no fade, height follows the
+       screenshot */
+    position: static;
+    width: 100%;
+    height: auto;
+    align-self: auto;
+    object-fit: contain;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 1px solid rgb(31, 31, 31);
+    -webkit-mask-image: none;
+    mask-image: none;
+}
+
+.project-modal .project-info {
+    flex: 0 0 auto;
+    margin-left: 0;
+    padding: 24px 24px 0 24px;
+    min-height: 0;
+}
+
+.project-modal .project-info h2 {
+    font-size: 24px;
+}
+
+.project-modal .project-info p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 12px 0 20px 0;
+}
+
+.project-modal .project-buttons {
+    align-self: flex-start;
+    margin-top: 0;
+}
+
+.project-modal .project-button {
+    height: 40px;
+    width: 110px;
+    font-size: .9rem;
+    padding: 10px;
+}
+
+.project-modal .project-button img {
     width: 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .project-overlay,
+    .project-modal {
+        transition: none;
+    }
 }
 
 
@@ -586,7 +1080,7 @@ svg path {
     text-align: center;
     font-size: 2rem;
     text-decoration: none;
-    transition: transform ease 300ms;
+    transition: transform ease 300ms, var(--theme-transition);
    
 }
 
@@ -619,7 +1113,7 @@ svg path {
 footer {
     text-align: center;
     height: 100px;
-    transition: background-color 0.4s ease;
+    transition: var(--theme-transition);
 }
 
 footer p{
